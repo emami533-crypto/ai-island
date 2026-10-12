@@ -1,0 +1,2101 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>جزیره هوش مصنوعی | AI Island</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{
+    --red:#b91c1c;
+    --red-dark:#991b1b;
+    --red-light:#dc2626;
+    --bg:#f5f5f5;
+    --white:#ffffff;
+    --text:#1a1a1a;
+    --text-soft:#404040;
+    --muted:#737373;
+    --muted-2:#a3a3a3;
+    --border:#e5e5e5;
+    --border-strong:#d4d4d4;
+    --radius:8px;
+    --radius-lg:12px;
+    --shadow:0 2px 8px rgba(0,0,0,.06);
+    --shadow-lg:0 8px 24px rgba(0,0,0,.1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Vazirmatn','Inter',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.85;
+    overflow-x:hidden;
+    min-height:100vh;
+    font-size:14.5px;
+  }
+  html[lang="en"] body{font-family:'Inter','Vazirmatn',system-ui,sans-serif;line-height:1.6}
+
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  /* ═══════════ Top bar ═══════════ */
+  .topbar{
+    background:var(--red);
+    color:#fff;
+    padding:8px 0;
+    font-size:12px;
+  }
+  .topbar-inner{
+    max-width:1280px;margin:0 auto;padding:0 20px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  .topbar-right{display:flex;gap:16px;align-items:center}
+  .topbar-left{display:flex;gap:16px;align-items:center}
+  .topbar a{color:#fff;opacity:.9;transition:.2s}
+  .topbar a:hover{opacity:1}
+
+  /* ═══════════ Header ═══════════ */
+  .header{
+    background:#fff;
+    border-bottom:1px solid var(--border);
+    position:sticky;top:0;z-index:50;
+    box-shadow:0 1px 3px rgba(0,0,0,.04);
+  }
+  .header-inner{
+    max-width:1280px;margin:0 auto;padding:0 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:24px;height:78px;
+  }
+  .logo{
+    display:flex;align-items:center;gap:12px;
+    cursor:pointer;flex-shrink:0;
+  }
+  .logo-mark{
+    width:46px;height:46px;border-radius:10px;
+    background:var(--red);color:#fff;
+    display:grid;place-items:center;font-size:22px;
+  }
+  .logo-text h1{
+    font-size:18px;font-weight:900;
+    color:var(--text);line-height:1.2;
+  }
+  .logo-text small{
+    display:block;font-size:10px;font-weight:700;
+    color:var(--red);letter-spacing:2.5px;margin-top:1px;
+  }
+  .nav{
+    display:flex;gap:4px;flex:1;
+    justify-content:center;
+  }
+  .nav a{
+    font-size:14.5px;font-weight:600;
+    color:var(--text-soft);
+    padding:8px 16px;border-radius:6px;
+    transition:.2s;cursor:pointer;
+    white-space:nowrap;
+  }
+  .nav a:hover{color:var(--red);background:#fef2f2}
+  .nav a.active{color:var(--red);background:#fef2f2}
+  .header-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+  .search-btn{
+    width:42px;height:42px;border-radius:8px;
+    background:var(--bg);border:1px solid var(--border);
+    color:var(--text-soft);cursor:pointer;
+    display:grid;place-items:center;font-size:15px;
+    transition:.2s;
+  }
+  .search-btn:hover{background:#fef2f2;color:var(--red);border-color:var(--red)}
+  .lang-btn{
+    background:transparent;border:1px solid var(--border);
+    color:var(--text-soft);font-family:inherit;
+    font-size:12.5px;font-weight:700;
+    padding:10px 14px;border-radius:8px;cursor:pointer;
+    transition:.2s;display:flex;align-items:center;gap:6px;
+  }
+  .lang-btn:hover{border-color:var(--red);color:var(--red)}
+  .login-btn{
+    background:var(--red);color:#fff;border:0;
+    font-family:inherit;font-weight:700;font-size:13.5px;
+    padding:11px 22px;border-radius:8px;cursor:pointer;
+    transition:.2s;white-space:nowrap;
+  }
+  .login-btn:hover{background:var(--red-dark)}
+  .user-chip{
+    display:none;align-items:center;gap:8px;
+    background:#fef2f2;border:1px solid var(--red);
+    padding:7px 14px;border-radius:8px;cursor:pointer;
+    transition:.2s;white-space:nowrap;
+  }
+  .user-chip:hover{background:#fee2e2}
+  .user-chip .ua{
+    width:26px;height:26px;border-radius:50%;
+    background:var(--red);color:#fff;
+    display:grid;place-items:center;
+    font-size:12px;font-weight:800;
+  }
+  .user-chip span{font-size:13px;font-weight:700;color:var(--red)}
+  .burger{display:none;background:none;border:0;font-size:24px;color:var(--text);cursor:pointer}
+/* ═══════════ Category-specific gradient covers ═══════════ */
+.cat-cover{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;overflow:hidden;
+}
+.cat-cover::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size:24px 24px;
+  z-index:0;
+}
+.cat-cover .cat-icon{
+  position:relative;z-index:2;
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,.25));
+}
+.cat-cover .cat-label{
+  position:relative;z-index:2;
+  font-size:10.5px;font-weight:700;
+  background:rgba(0,0,0,.3);color:#fff;
+  padding:4px 12px;border-radius:99px;
+  letter-spacing:.5px;
+}
+
+.cat-cover.cat-llm{
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+}
+.cat-cover.cat-agent{
+  background:linear-gradient(135deg,#0891b2,#06b6d4);
+}
+.cat-cover.cat-hardware{
+  background:linear-gradient(135deg,#ea580c,#f97316);
+}
+.cat-cover.cat-research{
+  background:linear-gradient(135deg,#059669,#10b981);
+}
+.cat-cover.cat-tools{
+  background:linear-gradient(135deg,#d97706,#f59e0b);
+}
+.cat-cover.cat-general{
+  background:linear-gradient(135deg,#b91c1c,#dc2626);
+}
+
+  /* ═══════════ Container ═══════════ */
+  .container{max-width:1280px;margin:0 auto;padding:0 20px}
+
+  /* ═══════════ Hero Section (خبر ویژه) ═══════════ */
+  .hero-section{padding:24px 0}
+  .hero-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:20px;
+  }
+  .hero-main{
+    background:#fff;border-radius:var(--radius-lg);
+    overflow:hidden;cursor:pointer;
+    transition:.25s;position:relative;
+    box-shadow:var(--shadow);
+  }
+  .hero-main:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+  .hero-img{
+    height:380px;position:relative;
+    background:linear-gradient(135deg,#7f1d1d,#b91c1c);
+    overflow:hidden;
+  }
+  .hero-img img{width:100%;height:100%;object-fit:cover}
+  .hero-img .gradient-cover{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:14px;color:#fff;
+  }
+  .hero-img .gradient-cover .icon{font-size:90px;opacity:.85}
+  .hero-img .gradient-cover .label{
+    font-size:12px;font-weight:700;
+    background:rgba(0,0,0,.25);padding:5px 14px;border-radius:99px;
+  }
+  .hero-body{padding:22px}
+  .hero-cat{
+    display:inline-block;
+    background:var(--red);color:#fff;
+    font-size:11px;font-weight:700;
+    padding:4px 12px;border-radius:4px;
+    margin-bottom:10px;letter-spacing:.5px;
+  }
+  .hero-body h2{
+    font-size:24px;font-weight:900;
+    line-height:1.5;margin-bottom:10px;
+    color:var(--text);letter-spacing:-.3px;
+  }
+  .hero-body p{
+    font-size:14px;color:var(--muted);
+    line-height:1.85;margin-bottom:14px;
+  }
+  .hero-meta{
+    display:flex;gap:16px;align-items:center;
+    font-size:12px;color:var(--muted-2);
+    padding-top:14px;border-top:1px solid var(--border);
+  }
+  .hero-meta .source{
+    color:var(--red);font-weight:700;
+  }
+  .hero-side{display:flex;flex-direction:column;gap:16px}
+  .side-card{
+    background:#fff;border-radius:var(--radius-lg);
+    overflow:hidden;cursor:pointer;transition:.25s;
+    box-shadow:var(--shadow);flex:1;display:flex;flex-direction:column;
+  }
+/* ═══════════ Dark Hero Section (Zoomit-style) ═══════════ */
+.hero-dark{
+  background:#0a0a0a;
+  padding:30px 0;
+}
+.hero-dark-grid{
+  display:grid;
+  grid-template-columns:1fr 1.8fr;
+  gap:30px;
+  align-items:stretch;
+}
+.hero-dark-list{
+  display:flex;
+  flex-direction:column;
+  border-inline-end:1px solid #222;
+  padding-inline-end:24px;
+}
+.hero-dark-item{
+  display:grid;
+  grid-template-columns:1fr 100px;
+  gap:14px;
+  padding:16px 0;
+  border-bottom:1px solid #1a1a1a;
+  cursor:pointer;
+  transition:.2s;
+  text-decoration:none;
+}
+.hero-dark-item:last-child{border-bottom:0}
+.hero-dark-item:hover{opacity:.8}
+.hero-dark-item-text{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.hero-dark-item h4{
+  color:#fff;
+  font-size:14.5px;
+  font-weight:700;
+  line-height:1.6;
+  margin-bottom:8px;
+}
+.hero-dark-item .meta{
+  font-size:11px;
+  color:#888;
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.hero-dark-item .meta .source{color:#ef4444;font-weight:700}
+.hero-dark-item .thumb{
+  width:100px;
+  height:70px;
+  border-radius:8px;
+  overflow:hidden;
+  background:#1a1a1a;
+  position:relative;
+  flex-shrink:0;
+}
+.hero-dark-item .thumb img{
+  width:100%;height:100%;object-fit:cover;
+}
+.hero-dark-item .thumb .cat-cover,
+.hero-dark-item .thumb .gradient-cover{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  color:#fff;
+}
+.hero-dark-main{
+  position:relative;
+  border-radius:12px;
+  overflow:hidden;
+  cursor:pointer;
+  min-height:520px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+}
+.hero-dark-main .main-img{
+  position:absolute;inset:0;z-index:0;
+}
+.hero-dark-main .main-img img{
+  width:100%;height:100%;object-fit:cover;
+}
+.hero-dark-main .main-img .cat-cover,
+.hero-dark-main .main-img .gradient-cover{
+  width:100%;height:100%;
+  display:grid;place-items:center;color:#fff;
+}
+.hero-dark-main .main-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top, rgba(0,0,0,.95) 0%, rgba(0,0,0,.5) 50%, transparent 100%);
+}
+.hero-dark-main .main-content{
+  position:relative;z-index:2;
+  padding:32px;
+}
+.hero-dark-main .badge{
+  display:inline-block;
+  background:#b91c1c;color:#fff;
+  font-size:11px;font-weight:700;
+  padding:5px 14px;border-radius:4px;
+  margin-bottom:14px;
+}
+.hero-dark-main h2{
+  color:#fff;
+  font-size:28px;
+  font-weight:900;
+  line-height:1.5;
+  margin-bottom:14px;
+  letter-spacing:-.3px;
+}
+.hero-dark-main p{
+  color:#ccc;
+  font-size:14px;
+  line-height:1.85;
+  margin-bottom:14px;
+}
+.hero-dark-main .meta{
+  display:flex;gap:16px;align-items:center;
+  font-size:12px;color:#999;
+}
+.hero-dark-main .meta .source{color:#ef4444;font-weight:700}
+
+@media(max-width:900px){
+  .hero-dark-grid{grid-template-columns:1fr}
+  .hero-dark-list{
+    border-inline-end:0;
+    border-top:1px solid #222;
+    padding-inline-end:0;
+    padding-top:20px;
+  }
+  .hero-dark-main{min-height:360px}
+  .hero-dark-main h2{font-size:22px}
+  .hero-dark-main .main-content{padding:22px}
+}
+@media(max-width:640px){
+  .hero-dark-item{grid-template-columns:1fr 80px}
+  .hero-dark-item .thumb{width:80px;height:60px}
+}
+  .side-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+  .side-img{
+    height:120px;position:relative;
+    background:linear-gradient(135deg,#7f1d1d,#b91c1c);
+    overflow:hidden;
+  }
+  .side-img img{width:100%;height:100%;object-fit:cover}
+  .side-img .gradient-cover{
+    position:absolute;inset:0;
+    display:grid;place-items:center;
+    font-size:38px;color:#fff;opacity:.9;
+  }
+  .side-body{padding:16px}
+  .side-body h4{
+    font-size:14.5px;font-weight:800;
+    line-height:1.55;margin-bottom:8px;
+    color:var(--text);
+  }
+  .side-body .meta{
+    font-size:11.5px;color:var(--muted-2);
+    display:flex;gap:10px;align-items:center;
+  }
+  .side-body .meta .source{color:var(--red);font-weight:700}
+
+  /* ═══════════ Section Header ═══════════ */
+  .section{padding:30px 0}
+  .section-head{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:20px;padding-bottom:12px;
+    border-bottom:2px solid var(--border);
+    position:relative;
+  }
+  .section-head::before{
+    content:'';position:absolute;bottom:-2px;inset-inline-start:0;
+    width:60px;height:2px;background:var(--red);
+  }
+  .section-head h3{
+    font-size:20px;font-weight:900;
+    display:flex;align-items:center;gap:10px;
+    color:var(--text);
+  }
+  .section-head h3 .icon{
+    color:var(--red);font-size:22px;
+  }
+  .section-head .more{
+    color:var(--red);font-size:13px;font-weight:700;
+    display:flex;align-items:center;gap:5px;
+    transition:.2s;
+  }
+  .section-head .more:hover{gap:9px}
+
+  /* ═══════════ Category row (1 big + 2 small) ═══════════ */
+  .cat-row{
+    display:grid;
+    grid-template-columns:1.6fr 1fr 1fr;
+    gap:18px;
+  }
+  .cat-main{
+    background:#fff;border-radius:var(--radius-lg);
+    overflow:hidden;cursor:pointer;transition:.25s;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;
+  }
+  .cat-main:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+  .cat-main .cat-img{
+    height:240px;position:relative;
+    background:linear-gradient(135deg,#7f1d1d,#b91c1c);
+    overflow:hidden;
+  }
+  .cat-main .cat-img img{width:100%;height:100%;object-fit:cover}
+  .cat-main .cat-img .gradient-cover{
+    position:absolute;inset:0;display:grid;place-items:center;
+    font-size:64px;color:#fff;opacity:.85;
+  }
+  .cat-main .cat-body{padding:20px}
+  .cat-main h4{
+    font-size:18px;font-weight:900;
+    line-height:1.5;margin-bottom:10px;
+    color:var(--text);
+  }
+  .cat-main p{
+    font-size:13.5px;color:var(--muted);
+    line-height:1.85;margin-bottom:12px;
+  }
+  .cat-main .meta{
+    display:flex;gap:14px;font-size:11.5px;
+    color:var(--muted-2);padding-top:12px;
+    border-top:1px solid var(--border);
+  }
+  .cat-main .meta .source{color:var(--red);font-weight:700}
+
+  .cat-small{
+    background:#fff;border-radius:var(--radius-lg);
+    overflow:hidden;cursor:pointer;transition:.25s;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;
+  }
+  .cat-small:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+  .cat-small .cat-img{
+    height:140px;position:relative;
+    background:linear-gradient(135deg,#7f1d1d,#b91c1c);
+    overflow:hidden;
+  }
+  .cat-small .cat-img img{width:100%;height:100%;object-fit:cover}
+  .cat-small .cat-img .gradient-cover{
+    position:absolute;inset:0;display:grid;place-items:center;
+    font-size:40px;color:#fff;opacity:.9;
+  }
+  .cat-small .cat-body{padding:16px;flex:1;display:flex;flex-direction:column}
+  .cat-small h4{
+    font-size:14px;font-weight:800;
+    line-height:1.55;margin-bottom:10px;
+    color:var(--text);flex:1;
+  }
+  .cat-small .meta{
+    font-size:11px;color:var(--muted-2);
+    display:flex;gap:10px;align-items:center;
+    padding-top:10px;border-top:1px solid var(--border);
+  }
+  .cat-small .meta .source{color:var(--red);font-weight:700}
+
+  /* ═══════════ News Grid (4 columns) ═══════════ */
+  .news-grid-4{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:18px;
+  }
+  .news-item{
+    background:#fff;border-radius:var(--radius-lg);
+    overflow:hidden;cursor:pointer;transition:.25s;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;
+  }
+  .news-item:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+  .news-item .ni-img{
+    height:150px;position:relative;
+    background:linear-gradient(135deg,#7f1d1d,#b91c1c);
+    overflow:hidden;
+  }
+  .news-item .ni-img img{width:100%;height:100%;object-fit:cover}
+  .news-item .ni-img .gradient-cover{
+    position:absolute;inset:0;display:grid;place-items:center;
+    font-size:42px;color:#fff;opacity:.9;
+  }
+  .news-item .ni-body{padding:16px;flex:1;display:flex;flex-direction:column}
+  .news-item .ni-cat{
+    font-size:10.5px;font-weight:700;
+    color:var(--red);margin-bottom:6px;
+    letter-spacing:.5px;
+  }
+  .news-item h4{
+    font-size:14px;font-weight:800;
+    line-height:1.55;margin-bottom:10px;
+    color:var(--text);flex:1;
+  }
+  .news-item .ni-meta{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:11px;color:var(--muted-2);
+    padding-top:10px;border-top:1px solid var(--border);
+  }
+  .news-item .ni-meta .source{color:var(--red);font-weight:700}
+
+  /* ═══════════ Tutorials Grid ═══════════ */
+  .tut-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:18px;
+  }
+  .tut-item{
+    background:#fff;border-radius:var(--radius-lg);
+    padding:22px;cursor:pointer;transition:.25s;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;
+  }
+  .tut-item:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+  .tut-head{display:flex;align-items:center;gap:12px}
+  .tut-icon{
+    width:52px;height:52px;border-radius:12px;
+    background:linear-gradient(135deg,#991b1b,#dc2626);
+    color:#fff;display:grid;place-items:center;
+    font-size:26px;flex-shrink:0;
+  }
+  .tut-title{
+    font-size:15px;font-weight:800;
+    line-height:1.5;color:var(--text);
+  }
+  .tut-meta{
+    display:flex;gap:6px;flex-wrap:wrap;
+    font-size:10.5px;
+  }
+  .tag-red{
+    background:#fef2f2;color:var(--red);
+    padding:3px 9px;border-radius:4px;font-weight:700;
+  }
+  .tag-green{background:#f0fdf4;color:#15803d;padding:3px 9px;border-radius:4px;font-weight:700}
+  .tag-yellow{background:#fefce8;color:#a16207;padding:3px 9px;border-radius:4px;font-weight:700}
+  .tag-orange{background:#fff7ed;color:#c2410c;padding:3px 9px;border-radius:4px;font-weight:700}
+  .tut-desc{
+    font-size:13px;color:var(--muted);
+    line-height:1.8;flex:1;
+  }
+  .tut-foot{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:12px;border-top:1px solid var(--border);
+    font-size:11.5px;color:var(--muted-2);
+  }
+  .tut-foot .read{
+    color:var(--red);font-weight:700;
+  }
+
+  /* ═══════════ Projects Grid ═══════════ */
+  .proj-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:18px;
+  }
+  .proj-item{
+    background:#fff;border-radius:var(--radius-lg);
+    padding:20px;transition:.25s;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;
+  }
+  .proj-item:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+  .proj-head{display:flex;align-items:center;gap:12px}
+  .proj-icon{
+    width:48px;height:48px;border-radius:12px;
+    background:linear-gradient(135deg,#991b1b,#dc2626);
+    color:#fff;display:grid;place-items:center;
+    font-size:24px;flex-shrink:0;
+  }
+  .proj-name{
+    font-size:15px;font-weight:800;
+    color:var(--text);display:block;
+  }
+  .proj-author{
+    font-size:11.5px;color:var(--muted);
+  }
+  .proj-desc{
+    font-size:13px;color:var(--muted);
+    line-height:1.8;flex:1;
+  }
+  .proj-tags{
+    display:flex;gap:5px;flex-wrap:wrap;
+  }
+  .proj-tag{
+    background:#fef2f2;color:var(--red);
+    font-size:10px;font-weight:600;
+    padding:3px 9px;border-radius:4px;
+  }
+  .proj-foot{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:12px;border-top:1px solid var(--border);
+    font-size:12px;
+  }
+  .proj-foot a{color:var(--red);font-weight:700}
+  .proj-vote{
+    background:none;border:0;color:var(--muted);
+    font-family:inherit;font-size:12px;cursor:pointer;
+    display:flex;gap:4px;align-items:center;transition:.2s;
+  }
+  .proj-vote:hover{color:var(--red)}
+
+  /* ═══════════ Chips ═══════════ */
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+  .chip{
+    background:#fff;border:1px solid var(--border-strong);
+    color:var(--text-soft);font-family:inherit;
+    font-size:13px;font-weight:600;
+    padding:8px 18px;border-radius:99px;
+    cursor:pointer;transition:.2s;text-decoration:none;
+    display:inline-block;
+  }
+  .chip:hover{border-color:var(--red);color:var(--red)}
+  .chip.active{background:var(--red);border-color:var(--red);color:#fff}
+
+  /* ═══════════ Page header ═══════════ */
+  .page-header{
+    background:#fff;padding:32px 0 24px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:24px;
+  }
+  .page-header h2{
+    font-size:28px;font-weight:900;
+    color:var(--text);margin-bottom:6px;
+  }
+  .page-header p{color:var(--muted);font-size:14.5px}
+
+  /* ═══════════ Pagination ═══════════ */
+  .pagination{
+    display:flex;justify-content:center;gap:6px;
+    margin-top:36px;flex-wrap:wrap;
+  }
+  .page-btn{
+    background:#fff;border:1px solid var(--border-strong);
+    color:var(--text);font-family:inherit;
+    font-size:13.5px;font-weight:700;
+    min-width:42px;height:42px;padding:0 14px;
+    border-radius:8px;cursor:pointer;transition:.2s;
+    display:inline-flex;align-items:center;justify-content:center;
+    text-decoration:none;
+  }
+  .page-btn:hover{border-color:var(--red);color:var(--red)}
+  .page-btn.active{background:var(--red);border-color:var(--red);color:#fff}
+
+  /* ═══════════ Article Detail (مقاله کامل) ═══════════ */
+  .article-header{
+    background:#fff;padding:36px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .article-header .cat-badge{
+    display:inline-block;
+    background:var(--red);color:#fff;
+    font-size:11px;font-weight:700;
+    padding:5px 14px;border-radius:4px;
+    margin-bottom:14px;letter-spacing:.5px;
+  }
+  .article-header h1{
+    font-size:32px;font-weight:900;
+    line-height:1.45;margin-bottom:14px;
+    color:var(--text);letter-spacing:-.5px;
+    max-width:900px;
+  }
+  .article-header .meta{
+    display:flex;gap:18px;align-items:center;
+    font-size:13px;color:var(--muted);
+    flex-wrap:wrap;
+  }
+  .article-header .meta .source{
+    color:var(--red);font-weight:700;
+  }
+  .article-content{
+    background:#fff;padding:36px;
+    border-radius:var(--radius-lg);margin:24px 0;
+    font-size:16px;line-height:2.1;color:var(--text-soft);
+    box-shadow:var(--shadow);
+  }
+  .article-content p{margin-bottom:18px}
+  .article-img{
+    width:100%;border-radius:var(--radius-lg);
+    margin:20px 0;box-shadow:var(--shadow);
+  }
+  .article-source{
+    background:#fef2f2;border:1px solid #fecaca;
+    border-radius:var(--radius);padding:16px 20px;
+    margin-top:24px;
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:12px;
+  }
+  .article-source span{color:var(--red);font-weight:700;font-size:14px}
+  .article-source a{
+    background:var(--red);color:#fff;
+    padding:10px 20px;border-radius:8px;
+    font-weight:700;font-size:13.5px;
+    display:inline-flex;align-items:center;gap:6px;
+    transition:.2s;
+  }
+  .article-source a:hover{background:var(--red-dark)}
+
+  /* ═══════════ Comments ═══════════ */
+  .comments-wrap{
+    background:#fff;padding:28px;
+    border-radius:var(--radius-lg);margin:24px 0;
+    box-shadow:var(--shadow);
+  }
+  .comments-wrap h5{
+    font-size:17px;font-weight:800;
+    margin-bottom:20px;display:flex;align-items:center;gap:8px;
+    color:var(--text);
+  }
+  .comments-wrap h5 .num{
+    background:var(--red);color:#fff;
+    font-size:12px;padding:3px 10px;border-radius:99px;
+    font-weight:700;
+  }
+  .cmt{
+    display:flex;gap:14px;padding:18px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .cmt:last-of-type{border-bottom:0}
+  .cmt-avatar{
+    width:42px;height:42px;border-radius:50%;
+    background:linear-gradient(135deg,#991b1b,#dc2626);
+    color:#fff;display:grid;place-items:center;
+    font-weight:800;font-size:15px;flex-shrink:0;
+  }
+  .cmt-body{flex:1}
+  .cmt-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .cmt-head b{font-size:14px;font-weight:700;color:var(--text)}
+  .cmt-head time{font-size:12px;color:var(--muted-2)}
+  .cmt-body p{font-size:13.5px;color:var(--text-soft);line-height:1.9}
+  .cmt-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+  .cmt-form textarea{grid-column:1/-1;min-height:90px;resize:vertical}
+  .cmt-form button{
+    grid-column:1/-1;background:var(--red);color:#fff;
+    border:0;font-family:inherit;font-weight:700;
+    font-size:14px;padding:12px;border-radius:8px;
+    cursor:pointer;transition:.2s;
+  }
+  .cmt-form button:hover{background:var(--red-dark)}
+  .login-note{
+    background:#fef2f2;border:1px solid #fecaca;
+    border-radius:8px;padding:18px;
+    text-align:center;font-size:14px;color:var(--red);
+    margin-top:20px;
+  }
+  .login-note button{
+    background:var(--red);color:#fff;border:0;
+    font-family:inherit;font-weight:700;font-size:13px;
+    padding:10px 22px;border-radius:6px;cursor:pointer;
+    margin-inline-start:10px;
+  }
+
+  /* ═══════════ Inputs ═══════════ */
+  input,textarea,select{
+    background:#fff;border:1px solid var(--border-strong);
+    color:var(--text);font-family:inherit;font-size:13.5px;
+    padding:11px 14px;border-radius:8px;outline:none;
+    transition:.2s;width:100%;
+  }
+  input:focus,textarea:focus,select:focus{
+    border-color:var(--red);
+    box-shadow:0 0 0 3px rgba(185,28,28,.1);
+  }
+  textarea{resize:vertical;min-height:90px;line-height:1.8}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  form .field{margin-bottom:16px}
+  form label{
+    display:block;font-size:13px;font-weight:600;
+    color:var(--text);margin-bottom:6px;
+  }
+  form label .req{color:var(--red)}
+
+  /* ═══════════ Modals ═══════════ */
+  .overlay{
+    position:fixed;inset:0;
+    background:rgba(0,0,0,.6);
+    backdrop-filter:blur(4px);
+    z-index:200;display:none;
+    align-items:center;justify-content:center;padding:20px;
+  }
+  .overlay.open{display:flex;animation:fadeIn .2s}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .modal{
+    background:#fff;border-radius:var(--radius-lg);
+    width:100%;max-width:640px;max-height:88vh;
+    overflow-y:auto;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);
+    animation:pop .3s cubic-bezier(.2,.9,.3,1.3);
+  }
+  @keyframes pop{
+    from{opacity:0;transform:scale(.94) translateY(14px)}
+    to{opacity:1;transform:none}
+  }
+  .modal-head{
+    padding:22px 26px;border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:flex-start;gap:16px;
+  }
+  .modal-head h4{font-size:18px;font-weight:800;color:var(--text)}
+  .modal-head .src{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .close{
+    background:var(--bg);border:1px solid var(--border);
+    color:var(--muted);width:36px;height:36px;
+    border-radius:8px;cursor:pointer;font-size:16px;
+    flex-shrink:0;transition:.2s;
+  }
+  .close:hover{background:#fee2e2;color:var(--red);border-color:var(--red)}
+  .modal-body{padding:24px 26px}
+  .tabs{
+    display:flex;gap:6px;background:var(--bg);
+    padding:5px;border-radius:10px;margin:0 26px 22px;
+  }
+  .tabs button{
+    flex:1;background:none;border:0;color:var(--muted);
+    font-family:inherit;font-size:13.5px;font-weight:700;
+    padding:10px;border-radius:7px;cursor:pointer;transition:.2s;
+  }
+  .tabs button.active{background:var(--red);color:#fff}
+  .auth-body{padding:0 26px 26px}
+  form button[type=submit]{
+    width:100%;background:var(--red);color:#fff;
+    border:0;font-family:inherit;font-weight:700;
+    font-size:14.5px;padding:13px;border-radius:8px;
+    cursor:pointer;transition:.2s;margin-top:6px;
+  }
+  form button[type=submit]:hover{background:var(--red-dark)}
+  .form-err{
+    background:#fef2f2;border:1px solid #fecaca;
+    color:var(--red);font-size:12.5px;
+    padding:11px 14px;border-radius:8px;
+    margin-bottom:14px;display:none;
+  }
+
+  /* ═══════════ Toast ═══════════ */
+  .toast{
+    position:fixed;bottom:26px;inset-inline-start:50%;
+    transform:translateX(-50%) translateY(120px);
+    z-index:300;
+    background:var(--red);color:#fff;
+    font-weight:700;font-size:13.5px;
+    padding:14px 26px;border-radius:99px;
+    box-shadow:0 18px 40px -12px rgba(185,28,28,.5);
+    transition:.4s;opacity:0;
+  }
+  .toast.show{transform:translateX(-50%) translateY(0)!important;opacity:1}
+
+  /* ═══════════ Footer ═══════════ */
+  .footer{
+    background:#1a1a1a;color:#a3a3a3;
+    padding:50px 0 30px;margin-top:40px;
+  }
+  .footer-grid{
+    display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:30px;margin-bottom:30px;
+  }
+  .footer h6{
+    color:#fff;font-size:14px;font-weight:800;
+    margin-bottom:16px;
+  }
+  .footer a{
+    display:block;color:#a3a3a3;
+    font-size:13px;margin-bottom:10px;
+    transition:.2s;cursor:pointer;
+  }
+  .footer a:hover{color:var(--red-light)}
+  .footer p{font-size:13px;line-height:1.9;margin-bottom:16px}
+  .footer-bottom{
+    border-top:1px solid #333;
+    padding-top:24px;text-align:center;
+    font-size:12.5px;color:#737373;
+  }
+  .footer-brand{
+    display:flex;align-items:center;gap:12px;margin-bottom:16px;
+  }
+  .footer-brand .logo-mark{
+    width:40px;height:40px;border-radius:9px;
+    background:var(--red);color:#fff;
+    display:grid;place-items:center;font-size:20px;
+  }
+  .footer-brand h5{
+    color:#fff;font-size:16px;font-weight:900;
+  }
+  .footer-brand small{
+    display:block;font-size:9.5px;color:#dc2626;
+    letter-spacing:2px;font-weight:700;
+  }
+
+  /* ═══════════ Utilities ═══════════ */
+  .empty{
+    grid-column:1/-1;text-align:center;
+    padding:50px 20px;color:var(--muted);font-size:14px;
+    background:#fff;border-radius:var(--radius-lg);
+  }
+  .loading{text-align:center;padding:60px;color:var(--muted)}
+  .loading::after{content:'...';animation:dots 1.4s infinite}
+  @keyframes dots{
+    0%,20%{content:'.'}40%{content:'..'}60%,100%{content:'...'}
+  }
+
+  .wow{visibility:hidden}
+
+  /* ═══════════ Back to top ═══════════ */
+  #backTop{
+    position:fixed;bottom:26px;inset-inline-start:26px;
+    width:48px;height:48px;border-radius:50%;
+    background:var(--red);color:#fff;
+    display:grid;place-items:center;cursor:pointer;z-index:100;
+    opacity:0;visibility:hidden;transition:.4s;
+    box-shadow:0 10px 30px -6px rgba(185,28,28,.6);
+    font-size:15px;font-weight:800;
+  }
+  #backTop.show{opacity:1;visibility:visible}
+  #backTop:hover{transform:translateY(-4px) scale(1.05);background:var(--red-dark)}
+  #backTop .pct{font-size:10px;font-weight:800;line-height:1;position:absolute}
+
+  /* ═══════════ Search overlay ═══════════ */
+  .search-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.85);
+    backdrop-filter:blur(6px);z-index:250;
+    display:none;align-items:flex-start;justify-content:center;
+    padding:80px 20px;
+  }
+  .search-overlay.open{display:flex;animation:fadeIn .2s}
+  .search-box{
+    background:#fff;border-radius:var(--radius-lg);
+    width:100%;max-width:700px;padding:24px;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+  }
+  .search-box input{
+    font-size:18px;padding:16px 20px;
+    border:2px solid var(--border-strong);
+  }
+  .search-results{
+    max-height:400px;overflow-y:auto;
+    margin-top:16px;
+  }
+  .search-item{
+    display:flex;gap:12px;padding:12px;
+    border-bottom:1px solid var(--border);
+    cursor:pointer;transition:.2s;
+  }
+  .search-item:hover{background:var(--bg)}
+  .search-item .si-img{
+    width:60px;height:60px;border-radius:8px;
+    background:var(--red);flex-shrink:0;
+    display:grid;place-items:center;color:#fff;font-size:22px;
+  }
+  .search-item .si-body{flex:1}
+  .search-item .si-body b{
+    font-size:14px;font-weight:700;color:var(--text);
+    display:block;margin-bottom:4px;line-height:1.5;
+  }
+  .search-item .si-body span{font-size:11.5px;color:var(--muted)}
+
+  /* ═══════════ Responsive ═══════════ */
+  @media(max-width:1100px){
+    .news-grid-4{grid-template-columns:repeat(3,1fr)}
+    .cat-row{grid-template-columns:1fr 1fr}
+    .cat-main{grid-column:span 2}
+  }
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr}
+    .hero-main .hero-img{height:280px}
+    .hero-side{flex-direction:row}
+    .side-card{flex:1}
+    .news-grid-4{grid-template-columns:1fr 1fr}
+    .tut-grid,.proj-grid{grid-template-columns:1fr 1fr}
+    .footer-grid{grid-template-columns:1fr 1fr}
+    .nav{display:none}
+    .burger{display:block}
+    .topbar{display:none}
+  }
+  @media(max-width:640px){
+    .hero-side{flex-direction:column}
+    .news-grid-4{grid-template-columns:1fr}
+    .tut-grid,.proj-grid{grid-template-columns:1fr}
+    .cat-row{grid-template-columns:1fr}
+    .cat-main{grid-column:span 1}
+    .cat-main .cat-img{height:200px}
+    .cmt-form,.row2{grid-template-columns:1fr}
+    .header-inner{height:68px;padding:0 14px}
+    .logo-text h1{font-size:15px}
+    .logo-mark{width:40px;height:40px;font-size:19px}
+    .login-btn{padding:9px 16px;font-size:12.5px}
+    .lang-btn{padding:8px 12px;font-size:12px}
+    .container{padding:0 14px}
+    .article-header h1{font-size:24px}
+    .article-content{padding:22px}
+    .footer-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<!-- ═══════════ TOP BAR ═══════════ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-right">
+      <span>📅 ۲۰ مهر ۱۴۰۵</span>
+      <span>|</span>
+      <span>پل میان دنیای هوش مصنوعی و زبان شما</span>
+    </div>
+    <div class="topbar-left">
+      <a href="mailto:hi@aiisland.ir"><i class="fas fa-envelope"></i> hi@aiisland.ir</a>
+      <a href="#"><i class="fab fa-twitter"></i> @AiIsland</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="/" onclick="navigate(event,'/')">
+      <div class="logo-mark">🏝️</div>
+      <div class="logo-text">
+        <h1 data-i18n="brand">جزیره هوش مصنوعی</h1>
+        <small data-i18n="brandSub">AI ISLAND</small>
+      </div>
+    </a>
+
+    <nav class="nav" id="mainNav">
+      <a href="/" onclick="navigate(event,'/')" data-nav="home" data-i18n="navHome">خانه</a>
+      <a href="/news" onclick="navigate(event,'/news')" data-nav="news" data-i18n="navNews">اخبار</a>
+      <a href="/learn" onclick="navigate(event,'/learn')" data-nav="learn" data-i18n="navLearn">آموزش</a>
+      <a href="/projects" onclick="navigate(event,'/projects')" data-nav="projects" data-i18n="navProjects">پروژه‌ها</a>
+      <a href="/about" onclick="navigate(event,'/about')" data-nav="about" data-i18n="navAbout">درباره ما</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="lang-btn" onclick="toggleLang()"><span id="langFlag">🇬🇧</span><span id="langLabel">EN</span></button>
+      <button class="search-btn" onclick="openSearch()" title="جستجو"><i class="fas fa-search"></i></button>
+      <button class="login-btn" id="loginBtn" onclick="openAuth('login')" data-i18n="login">ورود</button>
+      <div class="user-chip" id="userChip" onclick="openAuth('profile')"><div class="ua" id="userAv">?</div><span id="userName"></span></div>
+      <button class="burger" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════ MAIN CONTENT ═══════════ -->
+<main id="app"></main>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <div class="logo-mark">🏝️</div>
+          <div>
+            <h5 data-i18n="brand">جزیره هوش مصنوعی</h5>
+            <small data-i18n="brandSub">AI ISLAND</small>
+          </div>
+        </div>
+        <p data-i18n="footTagline">پل میان دنیای هوش مصنوعی و زبان شما. مهم‌ترین اخبار، آموزش‌ها و پروژه‌های هوش مصنوعی به زبان فارسی.</p>
+      </div>
+      <div>
+        <h6 data-i18n="footSec">بخش‌ها</h6>
+        <a onclick="navigate(event,'/news')" data-i18n="navNews">اخبار</a>
+        <a onclick="navigate(event,'/learn')" data-i18n="navLearn">آموزش</a>
+        <a onclick="navigate(event,'/projects')" data-i18n="navProjects">پروژه‌ها</a>
+        <a onclick="navigate(event,'/about')" data-i18n="navAbout">درباره ما</a>
+      </div>
+      <div>
+        <h6 data-i18n="footTopics">موضوعات</h6>
+        <a onclick="navigate(event,'/news/llm')">مدل‌ها</a>
+        <a onclick="navigate(event,'/news/agent')">ایجنت‌ها</a>
+        <a onclick="navigate(event,'/news/hardware')">سخت‌افزار</a>
+        <a onclick="navigate(event,'/news/research')">پژوهش</a>
+      </div>
+      <div>
+        <h6 data-i18n="footContact">ارتباط</h6>
+        <a href="mailto:hi@aiisland.ir">hi@aiisland.ir</a>
+        <a href="#">@AiIsland</a>
+        <a href="#">خبرنامه</a>
+      </div>
+    </div>
+    <div class="footer-bottom" data-i18n="copyright">© ۲۰۲۶ جزیره هوش مصنوعی (AI Island) — ساخته‌شده با ❤️ برای جامعه فارسی‌زبان</div>
+  </div>
+</footer>
+
+<!-- ═══════════ BACK TO TOP ═══════════ -->
+<div id="backTop" onclick="scrollToTop()"><span class="pct" id="backTopPct">0%</span></div>
+
+<!-- ═══════════ SEARCH OVERLAY ═══════════ -->
+<div class="search-overlay" id="searchOverlay" onclick="if(event.target===this)closeSearch()">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="جستجو در اخبار و آموزش‌ها..." oninput="doSearch(this.value)">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- ═══════════ NEWS MODAL (article detail) ═══════════ -->
+<div class="overlay" id="newsModal">
+  <div class="modal" style="max-width:820px">
+    <div class="modal-head">
+      <div><h4 id="mTitle"></h4><div class="src" id="mSrc"></div></div>
+      <button class="close" onclick="closeModal('newsModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="mImage"></div>
+      <div class="full-text" id="mText"></div>
+      <a id="mLink" href="#" target="_blank" style="display:inline-block;margin-top:16px;color:var(--red);font-weight:700;text-decoration:none" data-i18n="seeSource">مشاهده خبر اصلی در منبع ↗</a>
+    </div>
+    <div class="comments-wrap" style="margin:0 26px 26px">
+      <h5><span data-i18n="comments">💬 کامنت‌ها</span> <span class="num" id="cmtCount">۰</span></h5>
+      <div id="cmtList"></div>
+      <div id="cmtArea"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ AUTH MODAL ═══════════ -->
+<div class="overlay" id="authModal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-head"><div><h4 id="authTitle" data-i18n="authTitle">ورود به جزیره</h4><div class="src" id="authSub" data-i18n="authSub">برای ثبت‌نام و ورود</div></div>
+      <button class="close" onclick="closeModal('authModal')">✕</button></div>
+    <div class="tabs" id="authTabs">
+      <button class="active" onclick="switchAuth('login')" data-i18n="tabLogin">ورود</button>
+      <button onclick="switchAuth('signup')" data-i18n="tabSignup">ثبت‌نام</button>
+    </div>
+    <div class="auth-body">
+      <div class="form-err" id="authErr"></div>
+      <form onsubmit="submitAuth(event)">
+        <div class="field"><label data-i18n="fName">نام</label><input id="aName" placeholder="نام شما" data-i18n-ph="phName"></div>
+        <div class="field"><label data-i18n="fEmail">ایمیل</label><input id="aEmail" type="email" required placeholder="you@example.com"></div>
+        <div class="field"><label data-i18n="fPass">رمز عبور</label><input id="aPass" type="password" required placeholder="••••••••"></div>
+        <button type="submit" id="authSubmitBtn" data-i18n="tabLogin">ورود</button>
+        <div class="note" style="font-size:12px;color:var(--muted);margin-top:14px;text-align:center" data-i18n="authNote">حساب شما در سرور ذخیره می‌شود.</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ PROFILE MODAL ═══════════ -->
+<div class="overlay" id="profileModal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-head"><div><h4 id="profName"></h4><div class="src" id="profEmail"></div></div>
+      <button class="close" onclick="closeModal('profileModal')">✕</button></div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div style="background:var(--bg);border-radius:10px;padding:18px;text-align:center">
+          <b style="font-size:24px;font-weight:900;color:var(--red);display:block" id="profP">۰</b>
+          <span style="font-size:12.5px;color:var(--muted)" data-i18n="myProjects">پروژه‌های من</span>
+        </div>
+        <div style="background:var(--bg);border-radius:10px;padding:18px;text-align:center">
+          <b style="font-size:24px;font-weight:900;color:var(--red);display:block" id="profC">۰</b>
+          <span style="font-size:12.5px;color:var(--muted)" data-i18n="myComments">کامنت‌های من</span>
+        </div>
+      </div>
+      <button class="login-btn" style="width:100%;background:var(--bg);color:var(--text);border:1px solid var(--border)" onclick="logout()" data-i18n="logout">خروج از حساب</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SHARE PROJECT MODAL ═══════════ -->
+<div class="overlay" id="shareModal">
+  <div class="modal" style="max-width:580px">
+    <div class="modal-head"><div><h4 data-i18n="shareTitle">➕ اشتراک‌گذاری پروژه</h4><div class="src" data-i18n="shareSub">پروژه‌ات را با جامعه به اشتراک بگذار</div></div>
+      <button class="close" onclick="closeModal('shareModal')">✕</button></div>
+    <div class="modal-body">
+      <form onsubmit="submitProject(event)">
+        <div class="field"><label data-i18n="pName">نام پروژه *</label><input id="pName" required data-i18n-ph="phPName"></div>
+        <div class="row2">
+          <div class="field"><label data-i18n="pAuthor">نام سازنده *</label><input id="pAuthor" required data-i18n-ph="phAuthor"></div>
+          <div class="field"><label data-i18n="pCat">دسته‌بندی</label><select id="pCat"></select></div>
+        </div>
+        <div class="field"><label data-i18n="pDesc">توضیح کوتاه *</label><textarea id="pDesc" required data-i18n-ph="phDesc"></textarea></div>
+        <div class="row2">
+          <div class="field"><label data-i18n="pLink">لینک پروژه</label><input id="pLink" placeholder="https://github.com/..."></div>
+          <div class="field"><label data-i18n="pTags">تگ‌ها (با کاما)</label><input id="pTags" placeholder="LLM, Python, RAG"></div>
+        </div>
+        <div class="field"><label data-i18n="pIcon">آیکون/اموجی</label><input id="pIcon" placeholder="🚀" maxlength="2"></div>
+        <button type="submit" data-i18n="pSubmit">ارسال پروژه</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TOAST ═══════════ -->
+<div class="toast" id="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════
+   AI Island | Frontend v12 - Zoomit Style
+   ═══════════════════════════════════════════════════ */
+
+const API = '';
+let TOKEN = null;
+try { TOKEN = localStorage.getItem('ai_island_token'); } catch(e){}
+
+/* ═══════════ i18n ═══════════ */
+const I18N = {
+  fa:{
+    brand:"جزیره هوش مصنوعی", brandSub:"AI ISLAND",
+    navHome:"خانه", navNews:"اخبار", navLearn:"آموزش", navProjects:"پروژه‌ها", navAbout:"درباره ما",
+    login:"ورود", shareBtn:"➕ اشتراک پروژه",
+    footTagline:"پل میان دنیای هوش مصنوعی و زبان شما.",
+    footSec:"بخش‌ها", footTopics:"موضوعات", footContact:"ارتباط",
+    copyright:"© ۲۰۲۶ جزیره هوش مصنوعی (AI Island)",
+    seeSource:"مشاهده خبر اصلی در منبع ↗", comments:"💬 کامنت‌ها",
+    authTitle:"ورود به جزیره", authSub:"برای ثبت‌نام و ورود", tabLogin:"ورود", tabSignup:"ثبت‌نام",
+    fName:"نام", fEmail:"ایمیل", fPass:"رمز عبور", phName:"نام شما",
+    authNote:"حساب شما در سرور ذخیره می‌شود.",
+    myProjects:"پروژه‌های من", myComments:"کامنت‌های من", logout:"خروج از حساب",
+    shareTitle:"➕ اشتراک‌گذاری پروژه", shareSub:"پروژه‌ات را با جامعه به اشتراک بگذار",
+    pName:"نام پروژه *", pAuthor:"نام سازنده *", pCat:"دسته‌بندی", pDesc:"توضیح کوتاه *",
+    pLink:"لینک پروژه", pTags:"تگ‌ها (با کاما)", pIcon:"آیکون/اموجی",
+    phPName:"مثلاً: دستیار صوتی فارسی", phAuthor:"نام شما", phDesc:"پروژه‌ات چه کاری انجام می‌دهد؟",
+    pSubmit:"ارسال پروژه",
+    all:"همه", readMore:"مطالعه کامل", noNews:"هنوز خبری منتشر نشده.",
+    noTuts:"هنوز آموزشی منتشر نشده.", noProjs:"هنوز پروژه‌ای ثبت نشده.",
+    firstComment:"اولین نفری باشید که نظر می‌دهد!", sendComment:"ارسال کامنت",
+    mustLogin:"برای ثبت نظر ابتدا وارد شوید", mustLoginBtn:"ورود / ثبت‌نام",
+    cmtText:"نظر خود را بنویسید...",
+    justNow:"همین حالا",
+    needLoginShare:"برای ارسال پروژه ابتدا وارد شوید",
+    toastComment:"✅ کامنت شما منتشر شد", toastProject:"🎉 پروژه‌ات اضافه شد!",
+    toastLogin:"✅ خوش آمدید", toastSignup:"🎉 حساب شما ساخته شد", toastLogout:"از حساب خارج شدید",
+    errFields:"متن کامنت را وارد کنید", errAuth:"ایمیل یا رمز عبور نادرست است",
+    errExists:"این ایمیل قبلاً ثبت شده", errShort:"رمز عبور باید حداقل ۴ کاراکتر باشد",
+    errNet:"خطا در ارتباط با سرور",
+    readTime:"دقیقه", level_beginner:"مبتدی", level_intermediate:"متوسط", level_advanced:"پیشرفته",
+    prevPage:"قبلی", nextPage:"بعدی",
+    seeAll:"مشاهده همه", source:"منبع",
+    latest:"آخرین اخبار", featured:"خبر ویژه",
+    searchPlaceholder:"جستجو در اخبار و آموزش‌ها...",
+    cats:{all:"همه", tools:"ابزارها", llm:"مدل‌ها", agent:"ایجنت‌ها", hardware:"سخت‌افزار", research:"پژوهش", general:"عمومی"},
+    tutCats:{all:"همه", basics:"مبانی", prompt:"مهندسی پرامپت", context:"مهندسی متن", agent:"مهندسی ایجنت", image:"مهندسی تصویر", voice:"مهندسی صدا", code:"مهندسی کد", finetune:"Fine-tuning"},
+    aboutTitle:"درباره جزیره هوش مصنوعی",
+    ab1t:"مأموریت ما", ab1p:"دسترسی فارسی‌زبانان به مهم‌ترین تحولات هوش مصنوعی، بدون واسطه و به‌روز.",
+    ab2t:"منابع ما", ab2p:"TechCrunch، The Verge، NVIDIA، OpenAI، Hugging Face، arXiv و منابع معتبر دیگر.",
+    ab3t:"جامعه ما", ab3p:"جایی برای دیدن، نقد و الهام‌گرفتن از پروژه‌هایی که با هوش مصنوعی ساخته شده‌اند.",
+    projTitle:"پروژه‌های ساخته‌شده با هوش مصنوعی", projSub:"ساخته‌های خودتون رو با جامعه به اشتراک بگذارید",
+    learnTitle:"آموزش هوش مصنوعی", learnSub:"از صفر تا پیشرفته — همه‌چیز درباره AI",
+    newsTitle:"اخبار هوش مصنوعی", newsSub:"ترجمه‌شده از معتبرترین منابع جهان"
+  },
+  en:{
+    brand:"AI Island", brandSub:"AI ISLAND",
+    navHome:"Home", navNews:"News", navLearn:"Learn", navProjects:"Projects", navAbout:"About",
+    login:"Log in", shareBtn:"➕ Share",
+    footTagline:"A bridge between AI and your language.",
+    footSec:"Sections", footTopics:"Topics", footContact:"Contact",
+    copyright:"© 2026 AI Island",
+    seeSource:"Read original ↗", comments:"💬 Comments",
+    authTitle:"Welcome", authSub:"Sign up or log in", tabLogin:"Log in", tabSignup:"Sign up",
+    fName:"Name", fEmail:"Email", fPass:"Password", phName:"Your name",
+    authNote:"Your account is saved on the server.",
+    myProjects:"My projects", myComments:"My comments", logout:"Log out",
+    shareTitle:"➕ Share Project", shareSub:"Show the community what you've built",
+    pName:"Name *", pAuthor:"Author *", pCat:"Category", pDesc:"Description *",
+    pLink:"Link", pTags:"Tags", pIcon:"Icon",
+    phPName:"e.g. Persian Voice Assistant", phAuthor:"Your name", phDesc:"What does it do?",
+    pSubmit:"Submit",
+    all:"All", readMore:"Read more", noNews:"No stories yet.",
+    noTuts:"No tutorials yet.", noProjs:"No projects yet.",
+    firstComment:"Be the first to comment!", sendComment:"Post comment",
+    mustLogin:"Please log in to comment", mustLoginBtn:"Log in / Sign up",
+    cmtText:"Write your comment...",
+    justNow:"just now",
+    needLoginShare:"Please log in to submit",
+    toastComment:"✅ Comment posted", toastProject:"🎉 Project added!",
+    toastLogin:"✅ Welcome", toastSignup:"🎉 Account created", toastLogout:"Logged out",
+    errFields:"Please enter your comment", errAuth:"Incorrect email or password",
+    errExists:"Email already registered", errShort:"Password too short",
+    errNet:"Server error",
+    readTime:"min", level_beginner:"Beginner", level_intermediate:"Intermediate", level_advanced:"Advanced",
+    prevPage:"Prev", nextPage:"Next",
+    seeAll:"See all", source:"Source",
+    latest:"Latest News", featured:"Featured",
+    searchPlaceholder:"Search news and tutorials...",
+    cats:{all:"All", llm:"Models", agent:"Agents", hardware:"Hardware", research:"Research", tools:"Tools", general:"General"},
+    tutCats:{all:"All", basics:"Basics", prompt:"Prompt Eng.", context:"Context Eng.", agent:"Agent Eng.", image:"Image Eng.", voice:"Voice Eng.", code:"Code Eng.", finetune:"Fine-tuning"},
+    aboutTitle:"About AI Island",
+    ab1t:"Our Mission", ab1p:"Giving Persian speakers direct access to AI developments.",
+    ab2t:"Our Sources", ab2p:"TechCrunch, The Verge, NVIDIA, OpenAI, Hugging Face, arXiv and more.",
+    ab3t:"Our Community", ab3p:"A place to discover and get inspired.",
+    projTitle:"AI Projects", projSub:"Share what you've built",
+    learnTitle:"Learn AI", learnSub:"From beginner to advanced",
+    newsTitle:"AI News", newsSub:"Translated from trusted sources"
+  }
+};
+
+const CAT_ICONS = { llm:"🧠", agent:"🤖", hardware:"⚙️", research:"🔬", tools:"🛠️", general:"📰" };
+const TUT_ICONS = { basics:"🧠", prompt:"✍️", context:"📖", agent:"🤖", image:"🎨", voice:"🎙️", code:"💻", finetune:"⚙️" };
+const PROJCATS = ["chatbot","img","voice","video","text","code","biz"];
+const TUT_CATS = ["basics","prompt","context","agent","image","voice","code","finetune"];
+
+let LANG = "fa";
+let CURRENT_USER = null;
+let CURRENT_ROUTE = "/";
+let currentNewsItem = null;
+let authMode = "login";
+
+const t = k => I18N[LANG][k] || k;
+const catLabel = key => (I18N[LANG].cats[key]) || key;
+const tutLabel = key => (I18N[LANG].tutCats[key]) || key;
+const toFa = n => String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+const num = n => LANG==="fa" ? toFa(n) : String(n);
+
+function fmtDate(iso){
+  if(!iso) return t('justNow');
+  try{
+    const d = new Date(iso);
+    const diff = Math.floor((Date.now() - d.getTime())/60000); // minutes
+    if(diff < 1) return LANG==='fa' ? 'همین حالا' : 'just now';
+    if(diff < 60) return LANG==='fa' ? `${toFa(diff)} دقیقه قبل` : `${diff} min ago`;
+    const h = Math.floor(diff/60);
+    if(h < 24) return LANG==='fa' ? `${toFa(h)} ساعت قبل` : `${h}h ago`;
+    const days = Math.floor(h/24);
+    if(days < 7) return LANG==='fa' ? `${toFa(days)} روز قبل` : `${days}d ago`;
+    return LANG==='fa' ? `${toFa(days)} روز قبل` : `${days}d ago`;
+  }catch{ return t('justNow'); }
+}
+
+async function api(path, opts={}){
+  const headers = { 'Content-Type':'application/json', ...(opts.headers||{}) };
+  if(TOKEN) headers['Authorization'] = 'Bearer ' + TOKEN;
+  const r = await fetch(API + path, { ...opts, headers });
+  const data = await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(data.error || t('errNet'));
+  return data;
+}
+
+/* ═══════════ Routing ═══════════ */
+function navigate(e, path){
+  if(e) e.preventDefault();
+  history.pushState(null, '', path);
+  CURRENT_ROUTE = path;
+  renderRoute();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+window.addEventListener('popstate', ()=>{ CURRENT_ROUTE = location.pathname; renderRoute(); });
+
+function setActiveNav(key){
+  document.querySelectorAll('[data-nav]').forEach(a=>a.classList.remove('active'));
+  const el = document.querySelector(`[data-nav="${key}"]`);
+  if(el) el.classList.add('active');
+}
+
+async function renderRoute(){
+  const app = document.getElementById('app');
+  const path = CURRENT_ROUTE;
+  const navKey = path === '/' ? 'home' : path.split('/')[1];
+  setActiveNav(navKey);
+  app.innerHTML = `<div class="loading"></div>`;
+
+  if(path === '/') return renderHome();
+  if(path === '/news') return renderNewsPage(null, 1);
+  if(path.startsWith('/news/')){
+    const parts = path.split('/');
+    return renderNewsPage(parts[2], Number(parts[3])||1);
+  }
+  if(path === '/learn') return renderLearnPage(null, 1);
+  if(path.startsWith('/learn/')){
+    const parts = path.split('/');
+    if(parts[2]) return renderTutorialDetail(parts[2]);
+  }
+  if(path === '/projects') return renderProjectsPage();
+  if(path === '/about') return renderAboutPage();
+  return renderHome();
+}
+
+/* ═══════════ Card HTML helpers ═══════════ */
+function cardImg(n, size){
+  const cat = n.category || 'general';
+  const icon = CAT_ICONS[cat] || '📰';
+  const sz = size === 'hero' ? '90px' : size === 'big' ? '64px' : size === 'small' ? '40px' : '42px';
+  
+  // اگه خبر عکس واقعی داشت
+  if(n.image && n.image.trim() !== ''){
+    return `<img src="${n.image}" alt="" onerror="this.style.display='none'">`;
+  }
+  
+  // تولید seed یکتا از عنوان
+  const title = (n.title_en || n.title_fa || 'AI news').slice(0, 100);
+  let hash = 0;
+  for(let i = 0; i < title.length; i++){
+    hash = ((hash << 5) - hash) + title.charCodeAt(i);
+    hash = hash & hash;
+  }
+  const seed = Math.abs(hash) % 100000;
+  
+  // URL پروکسی سرور (بدون کلید API)
+  const prompt = encodeURIComponent(title + ', artificial intelligence, technology, digital art, no text');
+  const proxyUrl = `/api/image?prompt=${prompt}&seed=${seed}&width=800&height=400`;
+  
+  return `<img src="${proxyUrl}" alt="" loading="lazy" 
+    onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('afterbegin','<div class=\\'cat-cover cat-${cat}\\'><div class=\\'cat-icon\\' style=\\'font-size:${sz}\\'>${icon}</div><div class=\\'cat-label\\'>${catLabel(cat)}</div></div>')"
+    style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
+  >`;
+}
+function renderHome(){
+  const app = document.getElementById('app');
+  return (async ()=>{
+    const categories = ['llm','agent','hardware','research'];
+    const newsPromises = categories.map(c => api(`/api/news?category=${c}&limit=3`).catch(()=>({items:[]})));
+    
+    const toolsPromise = api('/api/news?category=tools&limit=4').catch(()=>({items:[]}));
+    const latestPromise = api('/api/news?limit=8').catch(()=>({items:[]}));
+    const tutPromise = api('/api/tutorials?limit=3').catch(()=>({items:[]}));
+    const projPromise = api('/api/projects').catch(()=>[]);
+
+    const [toolsData, latest, tutData, projs, ...catData] = await Promise.all([toolsPromise, latestPromise, tutPromise, projPromise, ...newsPromises]);
+
+    const toolsItems = toolsData.items || [];
+    const latestItems = latest.items || [];
+    const tutItems = tutData.items || [];
+
+    const hero = toolsItems[0] || latestItems[0];
+    const toolSideItems = toolsItems.slice(1, 3);
+    const gridItems = latestItems.slice(0, 8);
+
+    let heroHTML = '';
+    if(hero){
+      const sideItems = toolSideItems.concat(latestItems.slice(0, 3)).slice(0, 4);
+      heroHTML = '<div class="hero-dark"><div class="container"><div class="hero-dark-grid">';
+      heroHTML += '<div class="hero-dark-list">';
+      sideItems.forEach(n=>{
+        heroHTML += '<a class="hero-dark-item" onclick="openNews('+n.id+')">';
+        heroHTML += '<div class="hero-dark-item-text">';
+        heroHTML += '<h4>'+(n.title_fa||n.title_en)+'</h4>';
+        heroHTML += '<div class="meta"><span class="source">'+(n.source||'')+'</span><span>·</span><span>'+fmtDate(n.published_at)+'</span></div>';
+        heroHTML += '</div>';
+        heroHTML += '<div class="thumb">'+cardImg(n, 'small')+'</div>';
+        heroHTML += '</a>';
+      });
+      heroHTML += '</div>';
+      heroHTML += '<article class="hero-dark-main" onclick="openNews('+hero.id+')">';
+      heroHTML += '<div class="main-img">'+cardImg(hero, 'hero')+'</div>';
+      heroHTML += '<div class="main-overlay"></div>';
+      heroHTML += '<div class="main-content">';
+      heroHTML += '<span class="badge">◈ '+catLabel(hero.category)+'</span>';
+      heroHTML += '<h2>'+(hero.title_fa||hero.title_en)+'</h2>';
+      heroHTML += '<p>'+((hero.summary_fa||hero.summary_en||'').slice(0,180))+'...</p>';
+      heroHTML += '<div class="meta"><span class="source">'+(hero.source||'')+'</span><span>·</span><span>'+fmtDate(hero.published_at)+'</span></div>';
+      heroHTML += '</div></article>';
+      heroHTML += '</div></div></div>';
+    }
+
+    let toolsHTML = '';
+    if(toolsItems.length > 0){
+      toolsHTML = '<section class="container section" style="padding-top:20px">';
+      toolsHTML += '<div class="section-head" style="border-bottom-color:#7c3aed">';
+      toolsHTML += '<h3 style="color:#7c3aed"><span class="icon" style="color:#7c3aed">🛠️</span> جدیدترین ابزارهای هوش مصنوعی</h3>';
+      toolsHTML += '<a class="more" style="color:#7c3aed" href="/news/tools" onclick="navigate(event,\'/news/tools\')">'+t('seeAll')+' ←</a>';
+      toolsHTML += '</div><div class="news-grid-4">';
+      toolsItems.slice(0, 4).forEach(n=>{
+        toolsHTML += '<article class="news-item" onclick="openNews('+n.id+')" style="border:2px solid #7c3aed33">';
+        toolsHTML += '<div class="ni-img">'+cardImg(n, 'small')+'</div>';
+        toolsHTML += '<div class="ni-body">';
+        toolsHTML += '<div class="ni-cat" style="color:#7c3aed">🛠️ '+catLabel(n.category)+'</div>';
+        toolsHTML += '<h4>'+(n.title_fa||n.title_en)+'</h4>';
+        toolsHTML += '<div class="ni-meta"><span class="source">'+(n.source||'')+'</span><span>'+fmtDate(n.published_at)+'</span></div>';
+        toolsHTML += '</div></article>';
+      });
+      toolsHTML += '</div></section>';
+    }
+
+    let latestHTML = '<section class="container section">';
+    latestHTML += '<div class="section-head">';
+    latestHTML += '<h3><span class="icon">📰</span> '+t('latest')+'</h3>';
+    latestHTML += '<a class="more" href="/news" onclick="navigate(event,\'/news\')">'+t('seeAll')+' ←</a>';
+    latestHTML += '</div><div class="news-grid-4">';
+    if(gridItems.length === 0){
+      latestHTML += '<div class="empty">'+t('noNews')+'</div>';
+    } else {
+      gridItems.forEach(n=>{
+        latestHTML += '<article class="news-item" onclick="openNews('+n.id+')">';
+        latestHTML += '<div class="ni-img">'+cardImg(n, 'small')+'</div>';
+        latestHTML += '<div class="ni-body">';
+        latestHTML += '<div class="ni-cat">◈ '+catLabel(n.category)+'</div>';
+        latestHTML += '<h4>'+(n.title_fa||n.title_en)+'</h4>';
+        latestHTML += '<div class="ni-meta"><span class="source">'+(n.source||'')+'</span><span>'+fmtDate(n.published_at)+'</span></div>';
+        latestHTML += '</div></article>';
+      });
+    }
+    latestHTML += '</div></section>';
+
+    let catSectionsHTML = '';
+    categories.forEach((c,idx)=>{
+      const items = (catData[idx] && catData[idx].items) || [];
+      if(items.length === 0) return;
+      const main = items[0];
+      const small = items.slice(1, 3);
+      catSectionsHTML += '<section class="container section">';
+      catSectionsHTML += '<div class="section-head">';
+      catSectionsHTML += '<h3><span class="icon">'+(CAT_ICONS[c]||'')+'</span> '+catLabel(c)+'</h3>';
+      catSectionsHTML += '<a class="more" href="/news/'+c+'" onclick="navigate(event,\'/news/'+c+'\')">'+t('seeAll')+' ←</a>';
+      catSectionsHTML += '</div><div class="cat-row">';
+      catSectionsHTML += '<article class="cat-main" onclick="openNews('+main.id+')">';
+      catSectionsHTML += '<div class="cat-img">'+cardImg(main, 'big')+'</div>';
+      catSectionsHTML += '<div class="cat-body">';
+      catSectionsHTML += '<h4>'+(main.title_fa||main.title_en)+'</h4>';
+      catSectionsHTML += '<p>'+((main.summary_fa||main.summary_en||'').slice(0,150))+'...</p>';
+      catSectionsHTML += '<div class="meta"><span class="source">'+(main.source||'')+'</span><span>'+fmtDate(main.published_at)+'</span></div>';
+      catSectionsHTML += '</div></article>';
+      small.forEach(n=>{
+        catSectionsHTML += '<article class="cat-small" onclick="openNews('+n.id+')">';
+        catSectionsHTML += '<div class="cat-img">'+cardImg(n, 'small')+'</div>';
+        catSectionsHTML += '<div class="cat-body">';
+        catSectionsHTML += '<h4>'+(n.title_fa||n.title_en)+'</h4>';
+        catSectionsHTML += '<div class="meta"><span class="source">'+(n.source||'')+'</span><span>'+fmtDate(n.published_at)+'</span></div>';
+        catSectionsHTML += '</div></article>';
+      });
+      catSectionsHTML += '</div></section>';
+    });
+
+    let tutHTML = '<section class="container section">';
+    tutHTML += '<div class="section-head">';
+    tutHTML += '<h3><span class="icon">🎓</span> '+t('learnTitle')+'</h3>';
+    tutHTML += '<a class="more" href="/learn" onclick="navigate(event,\'/learn\')">'+t('seeAll')+' ←</a>';
+    tutHTML += '</div><div class="tut-grid">';
+    if(tutItems.length === 0){
+      tutHTML += '<div class="empty">'+t('noTuts')+'</div>';
+    } else {
+      tutItems.forEach(x=>{ tutHTML += tutCardHTML(x); });
+    }
+    tutHTML += '</div></section>';
+
+    let projHTML = '';
+    if(projs.length){
+      projHTML = '<section class="container section">';
+      projHTML += '<div class="section-head">';
+      projHTML += '<h3><span class="icon">🚀</span> '+t('projTitle')+'</h3>';
+      projHTML += '<a class="more" href="/projects" onclick="navigate(event,\'/projects\')">'+t('seeAll')+' ←</a>';
+      projHTML += '</div><div class="proj-grid">';
+      projs.slice(0, 3).forEach(p=>{ projHTML += projCardHTML(p); });
+      projHTML += '</div></section>';
+    }
+
+    app.innerHTML = heroHTML + toolsHTML + latestHTML + catSectionsHTML + tutHTML + projHTML;
+    initWOW();
+  })();
+}
+/* ═══════════ News Page ═══════════ */
+async function renderNewsPage(category, page){
+  const app = document.getElementById('app');
+  const cat = category || 'all';
+  const data = await api(`/api/news?category=${cat}&page=${page}&limit=12`).catch(()=>({items:[],pagination:{pages:1,total:0}}));
+  const items = data.items || [];
+  const pag = data.pagination || {pages:1, total:0, page:1};
+  const cats = ['all','tools','llm','agent','hardware','research','general'];
+  const title = cat === 'all' ? t('newsTitle') : catLabel(cat);
+
+  app.innerHTML = `
+    <div class="container" style="padding-top:30px">
+      <div class="page-header" style="border-radius:12px;padding:24px 28px;margin-bottom:22px">
+        <h2>${title}</h2>
+        <p>${t('newsSub')}</p>
+      </div>
+      <div class="chips">
+        ${cats.map(c=>`<a class="chip ${c===cat?'active':''}" href="/news${c==='all'?'':'/'+c}" onclick="navigate(event,'/news${c==='all'?'':'/'+c}')">${catLabel(c)}</a>`).join('')}
+      </div>
+      <div class="news-grid-4">
+        ${items.map(n=>`
+          <article class="news-item" onclick="openNews(${n.id})">
+            <div class="ni-img">${cardImg(n, 'small')}</div>
+            <div class="ni-body">
+              <div class="ni-cat">◈ ${catLabel(n.category)}</div>
+              <h4>${n.title_fa||n.title_en}</h4>
+              <div class="ni-meta">
+                <span class="source">${n.source||''}</span>
+                <span>${fmtDate(n.published_at)}</span>
+              </div>
+            </div>
+          </article>
+        `).join('') || `<div class="empty">${t('noNews')}</div>`}
+      </div>
+      ${renderPagination(pag, `/news${cat==='all'?'':'/'+cat}`)}
+    </div>
+  `;
+  initWOW();
+}
+
+/* ═══════════ Learn Page ═══════════ */
+async function renderLearnPage(category, page){
+  const app = document.getElementById('app');
+  const cat = category || 'all';
+  const data = await api(`/api/tutorials?category=${cat}&page=${page||1}&limit=12`).catch(()=>({items:[],pagination:{pages:1,total:0}}));
+  const items = data.items || [];
+  const pag = data.pagination || {pages:1,total:0,page:1};
+  const title = cat === 'all' ? t('learnTitle') : tutLabel(cat);
+
+  app.innerHTML = `
+    <div class="container" style="padding-top:30px">
+      <div class="page-header" style="border-radius:12px;padding:24px 28px;margin-bottom:22px">
+        <h2>${title}</h2>
+        <p>${t('learnSub')}</p>
+      </div>
+      <div class="chips">
+        <a class="chip ${cat==='all'?'active':''}" href="/learn" onclick="navigate(event,'/learn')">${tutLabel('all')}</a>
+        ${TUT_CATS.map(c=>`<a class="chip ${c===cat?'active':''}" href="/learn/${c}" onclick="navigate(event,'/learn/${c}')">${tutLabel(c)}</a>`).join('')}
+      </div>
+      <div class="tut-grid">
+        ${items.map(x=>tutCardHTML(x)).join('') || `<div class="empty">${t('noTuts')}</div>`}
+      </div>
+      ${renderPagination(pag, `/learn`)}
+    </div>
+  `;
+  initWOW();
+}
+
+function tutCardHTML(x){
+  const title = LANG==='fa' ? (x.title_fa||x.title_en) : (x.title_en||x.title_fa);
+  const summary = LANG==='fa' ? (x.summary_fa||x.summary_en) : (x.summary_en||x.summary_fa);
+  const icon = x.icon || TUT_ICONS[x.category] || '📚';
+  const level = x.level || 'beginner';
+  const levelLabel = t('level_'+level) || level;
+  const levelClass = level === 'beginner' ? 'tag-green' : level === 'intermediate' ? 'tag-yellow' : 'tag-orange';
+  const cat = x.category || 'basics';
+  
+  // تصویر تولیدی برای آموزش
+  let imgHTML = '';
+  if(x.image && x.image.trim() !== ''){
+    imgHTML = `<div class="tut-cover"><img src="${x.image}" alt="" onerror="this.remove()"></div>`;
+  } else {
+    // تولید seed یکتا از عنوان آموزش
+    const seedTitle = (x.title_en || x.title_fa || 'AI tutorial');
+    let hash = 0;
+    for(let i = 0; i < seedTitle.length; i++){
+      hash = ((hash << 5) - hash) + seedTitle.charCodeAt(i);
+      hash = hash & hash;
+    }
+    const seed = Math.abs(hash) % 100000;
+    
+    // پرامپت مخصوص هر دسته‌ی آموزش
+    const prompts = {
+      basics: 'artificial intelligence, neural network, brain, learning, colorful, digital art',
+      prompt: 'prompt engineering, writing, chatgpt, coding, colorful, minimalist',
+      context: 'context window, data flow, book, knowledge, modern, digital art',
+      agent: 'ai agent, robot, automation, futuristic, colorful',
+      image: 'ai image generation, art, creativity, colorful, digital art',
+      voice: 'voice assistant, sound waves, microphone, audio, modern',
+      code: 'coding, programming, developer, code, ai, colorful',
+      finetune: 'machine learning, training, data, gear, technology, digital art'
+    };
+    const promptText = prompts[cat] || 'artificial intelligence, technology, learning';
+    const fullPrompt = encodeURIComponent(promptText + ', modern, professional, no text, no words');
+   const proxyUrl = `/api/image?prompt=${fullPrompt}&seed=${seed}&width=600&height=340`;
+    imgHTML = `<div class="tut-cover">
+      <img src="${proxyUrl}" alt="" loading="lazy" 
+        onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\\'tut-cover-fallback cat-${cat}\\'><span style=\\'font-size:48px\\'>${icon}</span></div>';"
+      >
+    </div>`;
+  }
+  
+  return `<a class="tut-item" href="/learn/${x.slug}" onclick="openTut(event, '${x.slug}')">
+    ${imgHTML}
+    <div class="tut-head" style="margin-top:16px">
+      <div class="tut-icon">${icon}</div>
+      <div>
+        <div class="tut-title">${title}</div>
+        <div class="tut-meta" style="margin-top:6px">
+          <span class="tag-red">${tutLabel(cat)}</span>
+          <span class="${levelClass}">${levelLabel}</span>
+        </div>
+      </div>
+    </div>
+    <p class="tut-desc">${(summary||'').slice(0,140)}...</p>
+    <div class="tut-foot">
+      <span>⏱ ${num(x.read_time||5)} ${t('readTime')}</span>
+      <span class="read">${t('readMore')} ←</span>
+    </div>
+  </a>`;
+}
+
+function openTut(e, slug){ e.preventDefault(); navigate(e, `/learn/${slug}`); }
+
+async function renderTutorialDetail(slug){
+  const app = document.getElementById('app');
+  const x = await api(`/api/tutorials/${slug}`).catch(()=>null);
+  if(!x){ app.innerHTML = `<div class="container"><div class="empty">Not found</div></div>`; return; }
+  const title = LANG==='fa' ? (x.title_fa||x.title_en) : (x.title_en||x.title_fa);
+  const content = LANG==='fa' ? (x.content_fa||x.summary_fa) : (x.content_en||x.summary_en);
+  const icon = x.icon || TUT_ICONS[x.category] || '📚';
+  const level = x.level || 'beginner';
+  const levelLabel = t('level_'+level) || level;
+
+  app.innerHTML = `
+    <div class="article-header">
+      <div class="container">
+        <div class="cat-badge">${tutLabel(x.category)}</div>
+        <h1>${title}</h1>
+        <div class="meta">
+          <span class="source">${levelLabel}</span>
+          <span>⏱ ${num(x.read_time||5)} ${t('readTime')}</span>
+          ${x.source?`<span>منبع: ${x.source}</span>`:''}
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="article-content">
+        <div style="font-size:32px;margin-bottom:20px">${icon}</div>
+        <div style="white-space:pre-wrap">${content}</div>
+        ${x.url?`<div class="article-source"><span>${t('source')}: ${x.source||''}</span><a href="${x.url}" target="_blank">${t('seeSource')}</a></div>`:''}
+      </div>
+      <div style="margin-bottom:30px">
+        <a class="chip" href="/learn" onclick="navigate(event,'/learn')">← ${t('learnTitle')}</a>
+      </div>
+    </div>
+  `;
+}
+
+/* ═══════════ Projects Page ═══════════ */
+async function renderProjectsPage(){
+  const app = document.getElementById('app');
+  const projs = await api('/api/projects').catch(()=>[]);
+  app.innerHTML = `
+    <div class="container" style="padding-top:30px">
+      <div class="page-header" style="border-radius:12px;padding:24px 28px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+        <div>
+          <h2>${t('projTitle')}</h2>
+          <p>${t('projSub')}</p>
+        </div>
+        <button class="login-btn" onclick="requestShare()">${t('shareBtn')}</button>
+      </div>
+      <div class="proj-grid">
+        ${projs.map(p=>projCardHTML(p)).join('') || `<div class="empty">${t('noProjs')}</div>`}
+      </div>
+    </div>
+  `;
+}
+
+function projCardHTML(p){
+  const isMine = CURRENT_USER && p.user_id===CURRENT_USER.id;
+  return `<div class="proj-item">
+    <div class="proj-head">
+      <div class="proj-icon">${p.icon||'🚀'}</div>
+      <div>
+        <span class="proj-name">${p.name}${isMine?`<span style="font-size:10px;background:var(--red);color:#fff;padding:2px 8px;border-radius:4px;font-weight:800;margin-inline-start:6px">${LANG==='fa'?'مال من':'Mine'}</span>`:''}</span>
+        <span class="proj-author">${p.author} · ${catLabel(p.category)||''}</span>
+      </div>
+    </div>
+    <p class="proj-desc">${p.description}</p>
+    <div class="proj-tags">${(p.tags||'').split(',').filter(Boolean).map(x=>`<span class="proj-tag">#${x}</span>`).join('')}</div>
+    <div class="proj-foot">
+      <a href="${p.link||'#'}" target="_blank">${LANG==='fa'?'مشاهده':'View'} ↗</a>
+      <button class="proj-vote" onclick="voteProject(${p.id}, event)">▲ ${num(p.votes||0)}</button>
+    </div>
+  </div>`;
+}
+
+/* ═══════════ About Page ═══════════ */
+async function renderAboutPage(){
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="container" style="padding-top:30px">
+      <div class="page-header" style="border-radius:12px;padding:24px 28px;margin-bottom:22px">
+        <h2>${t('aboutTitle')}</h2>
+      </div>
+      <div class="news-grid-4" style="grid-template-columns:repeat(3,1fr)">
+        <div class="news-item" style="cursor:default;padding:24px">
+          <div style="font-size:36px;margin-bottom:12px">🎯</div>
+          <h4 style="margin-bottom:10px">${t('ab1t')}</h4>
+          <p style="font-size:13px;color:var(--muted);line-height:1.9">${t('ab1p')}</p>
+        </div>
+        <div class="news-item" style="cursor:default;padding:24px">
+          <div style="font-size:36px;margin-bottom:12px">🌐</div>
+          <h4 style="margin-bottom:10px">${t('ab2t')}</h4>
+          <p style="font-size:13px;color:var(--muted);line-height:1.9">${t('ab2p')}</p>
+        </div>
+        <div class="news-item" style="cursor:default;padding:24px">
+          <div style="font-size:36px;margin-bottom:12px">🤝</div>
+          <h4 style="margin-bottom:10px">${t('ab3t')}</h4>
+          <p style="font-size:13px;color:var(--muted);line-height:1.9">${t('ab3p')}</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ═══════════ News Modal ═══════════ */
+async function openNews(id){
+  try{
+    const n = await api(`/api/news/${id}`);
+    currentNewsItem = n;
+    const title = LANG==='fa' ? (n.title_fa||n.title_en) : (n.title_en||n.title_fa);
+    const content = LANG==='fa' ? (n.content_fa||n.summary_fa) : (n.content_en||n.summary_en);
+    document.getElementById('mTitle').textContent = title;
+    document.getElementById('mSrc').textContent = `${t('source')}: ${n.source||''} · ${fmtDate(n.published_at)} · ${catLabel(n.category)}`;
+    document.getElementById('mImage').innerHTML = n.image ? `<img src="${n.image}" class="article-img" onerror="this.remove()">` : '';
+    document.getElementById('mText').innerHTML = `<div style="font-size:15.5px;line-height:2.1;color:var(--text-soft)">${(content||'').split('\n\n').map(p=>`<p style="margin-bottom:14px">${p}</p>`).join('')}</div>`;
+    document.getElementById('mLink').href = n.url || '#';
+    renderComments(n);
+    document.getElementById('newsModal').classList.add('open');
+  }catch(e){ toast('⚠️ '+e.message); }
+}
+
+function renderComments(n){
+  const c = n.comments || [];
+  document.getElementById('cmtCount').textContent = num(c.length);
+  document.getElementById('cmtList').innerHTML = c.length ? c.map(x=>{
+    const nm = x.name || 'User';
+    return `<div class="cmt"><div class="cmt-avatar">${nm.trim()[0].toUpperCase()}</div>
+      <div class="cmt-body"><div class="cmt-head"><b>${nm}</b><time>${fmtDate(x.created_at)}</time></div>
+      <p>${x.text}</p></div></div>`;}).join('') : `<div class="empty" style="padding:20px;background:transparent">${t('firstComment')}</div>`;
+
+  const area = document.getElementById('cmtArea');
+  if(CURRENT_USER){
+    area.innerHTML = `<div class="cmt-form">
+      <input value="${CURRENT_USER.name}" readonly>
+      <input value="${CURRENT_USER.email}" readonly>
+      <textarea id="cmtText" placeholder="${t('cmtText')}"></textarea>
+      <button onclick="addComment()">${t('sendComment')}</button></div>`;
+  }else{
+    area.innerHTML = `<div class="login-note">${t('mustLogin')}
+      <button onclick="openAuth('login')">${t('mustLoginBtn')}</button></div>`;
+  }
+}
+
+async function addComment(){
+  if(!CURRENT_USER){toast('⚠️ '+t('mustLogin'));return;}
+  const text = document.getElementById('cmtText').value.trim();
+  if(!text){toast('⚠️ '+t('errFields'));return;}
+  try{
+    await api(`/api/news/${currentNewsItem.id}/comments`, {method:'POST', body: JSON.stringify({text})});
+    currentNewsItem.comments.unshift({name:CURRENT_USER.name, text, created_at:new Date().toISOString()});
+    renderComments(currentNewsItem);
+    toast(t('toastComment'));
+  }catch(e){ toast('⚠️ '+e.message); }
+}
+
+/* ═══════════ Auth ═══════════ */
+function openAuth(mode){
+  if(mode==='profile' && CURRENT_USER){ openProfile(); return; }
+  authMode = mode==='signup'?'signup':'login';
+  renderAuthUI();
+  document.getElementById('authErr').style.display='none';
+  document.getElementById('authModal').classList.add('open');
+}
+function switchAuth(m){ authMode=m; renderAuthUI(); document.getElementById('authErr').style.display='none'; }
+function renderAuthUI(){
+  const isLogin = authMode==='login';
+  document.getElementById('aName').parentElement.style.display = isLogin?'none':'block';
+  document.getElementById('aName').required = !isLogin;
+  document.getElementById('authTitle').textContent = isLogin?I18N[LANG].tabLogin:I18N[LANG].tabSignup;
+  document.getElementById('authSubmitBtn').textContent = isLogin?I18N[LANG].tabLogin:I18N[LANG].tabSignup;
+  document.getElementById('authSub').textContent = I18N[LANG].authSub;
+  document.querySelectorAll('#authTabs button').forEach((b,i)=>b.classList.toggle('active',(i===0)===(authMode==='login')));
+}
+async function submitAuth(e){
+  e.preventDefault();
+  const name = document.getElementById('aName').value.trim();
+  const email = document.getElementById('aEmail').value.trim().toLowerCase();
+  const password = document.getElementById('aPass').value;
+  const err = document.getElementById('authErr');
+  err.style.display='none';
+  if(authMode==='signup' && password.length<4){ showErr(t('errShort')); return; }
+  try{
+    const path = authMode==='signup' ? '/api/auth/signup' : '/api/auth/login';
+    const body = authMode==='signup' ? {name,email,password} : {email,password};
+    const data = await api(path, {method:'POST', body: JSON.stringify(body)});
+    TOKEN = data.token;
+    try{ localStorage.setItem('ai_island_token', TOKEN); }catch(e){}
+    CURRENT_USER = data.user;
+    closeModal('authModal'); e.target.reset();
+    renderUser();
+    toast(authMode==='signup'?t('toastSignup'):t('toastLogin'));
+  }catch(ex){
+    const msg = ex.message || '';
+    if(/ایمیل|email/i.test(msg) && /ثبت|exist/i.test(msg)) showErr(t('errExists'));
+    else if(/نادرست|incorrect|invalid/i.test(msg)) showErr(t('errAuth'));
+    else showErr(msg || t('errAuth'));
+  }
+}
+function showErr(msg){const e=document.getElementById('authErr');e.textContent=msg;e.style.display='block';}
+function renderUser(){
+  const chip=document.getElementById('userChip');
+  const lb=document.getElementById('loginBtn');
+  if(CURRENT_USER){
+    chip.style.display='flex'; lb.style.display='none';
+    document.getElementById('userAv').textContent=(CURRENT_USER.name||'?').trim()[0].toUpperCase();
+    document.getElementById('userName').textContent=CURRENT_USER.name;
+  }else{ chip.style.display='none'; lb.style.display=''; }
+}
+async function openProfile(){
+  document.getElementById('profName').textContent=CURRENT_USER.name;
+  document.getElementById('profEmail').textContent=CURRENT_USER.email;
+  try{
+    const me = await api('/api/me');
+    document.getElementById('profP').textContent=num((me.projects||[]).length);
+    document.getElementById('profC').textContent=num((me.comments||[]).length);
+  }catch(e){ document.getElementById('profP').textContent='۰'; document.getElementById('profC').textContent='۰'; }
+  document.getElementById('profileModal').classList.add('open');
+}
+function logout(){
+  CURRENT_USER=null; TOKEN=null;
+  try{ localStorage.removeItem('ai_island_token'); }catch(e){}
+  closeModal('profileModal'); renderUser(); toast(t('toastLogout'));
+}
+
+/* ═══════════ Projects Share ═══════════ */
+function requestShare(){
+  if(!CURRENT_USER){ toast('⚠️ '+t('needLoginShare')); openAuth('login'); return; }
+  document.getElementById('pAuthor').value = CURRENT_USER.name;
+  const sel = document.getElementById('pCat');
+  sel.innerHTML = PROJCATS.map(k=>`<option value="${k}">${catLabel(k)}</option>`).join('');
+  document.getElementById('shareModal').classList.add('open');
+}
+async function submitProject(e){
+  e.preventDefault();
+  if(!CURRENT_USER){ toast('⚠️ '+t('needLoginShare')); openAuth('login'); return; }
+  const tags = document.getElementById('pTags').value.split(',').map(x=>x.trim()).filter(Boolean);
+  const payload = {
+    name: document.getElementById('pName').value.trim(),
+    description: document.getElementById('pDesc').value.trim(),
+    category: document.getElementById('pCat').value,
+    link: document.getElementById('pLink').value.trim(),
+    tags, icon: document.getElementById('pIcon').value.trim() || '🚀',
+    lang: LANG
+  };
+  try{
+    await api('/api/projects', {method:'POST', body: JSON.stringify(payload)});
+    closeModal('shareModal'); e.target.reset();
+    toast(t('toastProject'));
+    if(CURRENT_ROUTE === '/projects') renderProjectsPage();
+  }catch(ex){ toast('⚠️ '+ex.message); }
+}
+async function voteProject(id, e){
+  if(e) e.stopPropagation();
+  try{
+    await api(`/api/projects/${id}/vote`, {method:'POST'});
+    e.target.innerHTML = '▲ ' + (parseInt(e.target.textContent.replace(/[^0-9۰-۹]/g,'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d))) + 1);
+  }catch(e){}
+}
+
+/* ═══════════ Search ═══════════ */
+function openSearch(){
+  document.getElementById('searchOverlay').classList.add('open');
+  setTimeout(()=>document.getElementById('searchInput').focus(), 100);
+}
+function closeSearch(){
+  document.getElementById('searchOverlay').classList.remove('open');
+  document.getElementById('searchResults').innerHTML = '';
+  document.getElementById('searchInput').value = '';
+}
+let searchTimer;
+function doSearch(q){
+  clearTimeout(searchTimer);
+  const res = document.getElementById('searchResults');
+  if(!q || q.length < 2){ res.innerHTML=''; return; }
+  res.innerHTML = `<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">در حال جستجو...</div>`;
+  searchTimer = setTimeout(async ()=>{
+    try{
+      const [newsData, tutData] = await Promise.all([
+        api(`/api/news?q=${encodeURIComponent(q)}&limit=5`).catch(()=>({items:[]})),
+        api(`/api/tutorials?limit=20`).catch(()=>({items:[]}))
+      ]);
+      const news = (newsData.items||[]).map(n=>({
+        type:'news', id:n.id, title: n.title_fa||n.title_en, cat: n.category, src: n.source, date: n.published_at
+      }));
+      const tuts = (tutData.items||[]).filter(x=>{
+        const tt = (x.title_fa||'') + ' ' + (x.title_en||'') + ' ' + (x.summary_fa||'');
+        return tt.toLowerCase().includes(q.toLowerCase());
+      }).slice(0, 5).map(x=>({
+        type:'tut', slug:x.slug, title: x.title_fa||x.title_en, cat: x.category, src: 'آموزش'
+      }));
+      const all = [...news, ...tuts];
+      if(!all.length){ res.innerHTML = `<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">نتیجه‌ای یافت نشد</div>`; return; }
+      res.innerHTML = all.map(item=>`
+        <div class="search-item" onclick="${item.type==='news'?`closeSearch();openNews(${item.id})`:`closeSearch();navigate(event,'/learn/${item.slug}')`}">
+          <div class="si-img">${CAT_ICONS[item.cat]||TUT_ICONS[item.cat]||'📄'}</div>
+          <div class="si-body"><b>${item.title}</b><span>${item.src} · ${item.date?fmtDate(item.date):''}</span></div>
+        </div>
+      `).join('');
+    }catch(e){ res.innerHTML = `<div style="text-align:center;padding:20px;color:var(--red);font-size:13px">خطا در جستجو</div>`; }
+  }, 400);
+}
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape') closeSearch();
+});
+
+/* ═══════════ Pagination ═══════════ */
+function renderPagination(pag, basePath){
+  if(!pag || pag.pages <= 1) return '';
+  const current = pag.page || 1;
+  const total = pag.pages;
+  let html = `<div class="pagination">`;
+  if(current > 1){
+    html += `<a class="page-btn" href="${basePath}/${current-1}" onclick="navigate(event,'${basePath}/${current-1}')">← ${t('prevPage')}</a>`;
+  }
+  const start = Math.max(1, current-2);
+  const end = Math.min(total, current+2);
+  for(let i=start; i<=end; i++){
+    html += `<a class="page-btn ${i===current?'active':''}" href="${basePath}/${i}" onclick="navigate(event,'${basePath}/${i}')">${num(i)}</a>`;
+  }
+  if(current < total){
+    html += `<a class="page-btn" href="${basePath}/${current+1}" onclick="navigate(event,'${basePath}/${current+1}')">${t('nextPage')} →</a>`;
+  }
+  html += `</div>`;
+  return html;
+}
+
+/* ═══════════ Modals ═══════════ */
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.overlay').forEach(o=>o.classList.remove('open'));});
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>el.classList.remove('show'),2600);
+}
+function toggleMenu(){
+  const nl=document.getElementById('mainNav');
+  const vis=nl.style.display==='flex';
+  Object.assign(nl.style,{
+    display:vis?'':'flex',
+    position:'absolute',top:'78px',right:'0',left:'0',
+    flexDirection:'column',
+    background:'#fff',
+    padding:'16px',
+    gap:'6px',
+    borderBottom:'1px solid var(--border)',
+    boxShadow:'0 10px 30px rgba(0,0,0,.1)'
+  });
+}
+
+/* ═══════════ Language ═══════════ */
+function applyLang(){
+  document.documentElement.lang = LANG;
+  document.documentElement.dir = LANG==="fa" ? "rtl" : "ltr";
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.dataset.i18n; if(I18N[LANG][k]!==undefined) el.textContent=I18N[LANG][k]; });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ const k=el.dataset.i18nPh; if(I18N[LANG][k]!==undefined) el.placeholder=I18N[LANG][k]; });
+  document.getElementById('langFlag').textContent = LANG==="fa" ? "🇬🇧" : "🇮🇷";
+  document.getElementById('langLabel').textContent = LANG==="fa" ? "EN" : "FA";
+  document.getElementById('searchInput').placeholder = t('searchPlaceholder');
+  renderRoute();
+}
+function toggleLang(){ LANG = LANG==="fa"?"en":"fa"; applyLang(); }
+
+/* ═══════════ WOW + Scroll ═══════════ */
+function initWOW(){
+  if(typeof WOW !== 'undefined'){
+    if(window._wow){ try{ window._wow.sync(); }catch(e){ new WOW().init(); } }
+    else { window._wow = new WOW({offset:60, mobile:false}); window._wow.init(); }
+  }
+}
+
+function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+window.addEventListener('scroll', ()=>{
+  const el = document.getElementById('backTop');
+  if(!el) return;
+  const pct = Math.min(100, (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+  document.getElementById('backTopPct').textContent = Math.round(pct) + '%';
+  if(window.scrollY > 400) el.classList.add('show');
+  else el.classList.remove('show');
+}, {passive:true});
+
+/* ═══════════ Boot ═══════════ */
+async function boot(){
+  if(TOKEN){
+    try{ const me = await api('/api/me'); CURRENT_USER = me.user; }
+    catch(e){ TOKEN = null; try{ localStorage.removeItem('ai_island_token'); }catch(_){} }
+  }
+  CURRENT_ROUTE = location.pathname || '/';
+  renderUser();
+  await renderRoute();
+}
+boot();
+</script>
+</body>
+</html>

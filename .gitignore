@@ -1,0 +1,6 @@
+node_modules/
+.env
+ai-island.db
+ai-island.db-shm
+ai-island.db-wal
+*.log

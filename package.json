@@ -1,0 +1,19 @@
+{
+  "name": "ai-island",
+  "version": "1.0.0",
+  "description": "AI Island News Website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "better-sqlite3": "*",
+    "cors": "*",
+    "rss-parser": "*",
+    "node-cron": "*",
+    "dotenv": "*",
+    "bcryptjs": "*",
+    "jsonwebtoken": "*"
+  }
+}

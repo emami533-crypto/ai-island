@@ -1,0 +1,5 @@
+{
+  "name": "ai-island",
+  "port": 3000,
+  "type": "nodejs"
+}
