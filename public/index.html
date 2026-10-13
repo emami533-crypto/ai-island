@@ -1399,6 +1399,12 @@ async function renderRoute(){
 }
 
 /* ═══════════ Card HTML helpers ═══════════ */
+function pickLang(item, field){
+  if(!item) return '';
+  const fa = item[field + '_fa'] || '';
+  const en = item[field + '_en'] || '';
+  return LANG === 'fa' ? (fa || en) : (en || fa);
+}
 function cardImg(n, size){
   const cat = n.category || 'general';
   const icon = CAT_ICONS[cat] || '📰';
@@ -1456,7 +1462,7 @@ function renderHome(){
       sideItems.forEach(n=>{
         heroHTML += '<a class="hero-dark-item" onclick="openNews('+n.id+')">';
         heroHTML += '<div class="hero-dark-item-text">';
-        heroHTML += '<h4>'+(n.title_fa||n.title_en)+'</h4>';
+        heroHTML += '<h4>'+pickLang(n,'title')+'</h4>';
         heroHTML += '<div class="meta"><span class="source">'+(n.source||'')+'</span><span>·</span><span>'+fmtDate(n.published_at)+'</span></div>';
         heroHTML += '</div>';
         heroHTML += '<div class="thumb">'+cardImg(n, 'small')+'</div>';
@@ -1468,8 +1474,8 @@ function renderHome(){
       heroHTML += '<div class="main-overlay"></div>';
       heroHTML += '<div class="main-content">';
       heroHTML += '<span class="badge">◈ '+catLabel(hero.category)+'</span>';
-      heroHTML += '<h2>'+(hero.title_fa||hero.title_en)+'</h2>';
-      heroHTML += '<p>'+((hero.summary_fa||hero.summary_en||'').slice(0,180))+'...</p>';
+      heroHTML += '<h2>'+pickLang(hero,'title')+'</h2>';
+      heroHTML += '<p>'+(pickLang(hero,'summary').slice(0,180))+'...</p>';
       heroHTML += '<div class="meta"><span class="source">'+(hero.source||'')+'</span><span>·</span><span>'+fmtDate(hero.published_at)+'</span></div>';
       heroHTML += '</div></article>';
       heroHTML += '</div></div></div>';
@@ -1487,7 +1493,7 @@ function renderHome(){
         toolsHTML += '<div class="ni-img">'+cardImg(n, 'small')+'</div>';
         toolsHTML += '<div class="ni-body">';
         toolsHTML += '<div class="ni-cat" style="color:#7c3aed">🛠️ '+catLabel(n.category)+'</div>';
-        toolsHTML += '<h4>'+(n.title_fa||n.title_en)+'</h4>';
+       toolsHTML += '<h4>'+pickLang(n,'title')+'</h4>';
         toolsHTML += '<div class="ni-meta"><span class="source">'+(n.source||'')+'</span><span>'+fmtDate(n.published_at)+'</span></div>';
         toolsHTML += '</div></article>';
       });
@@ -1507,7 +1513,7 @@ function renderHome(){
         latestHTML += '<div class="ni-img">'+cardImg(n, 'small')+'</div>';
         latestHTML += '<div class="ni-body">';
         latestHTML += '<div class="ni-cat">◈ '+catLabel(n.category)+'</div>';
-        latestHTML += '<h4>'+(n.title_fa||n.title_en)+'</h4>';
+       latestHTML += '<h4>'+pickLang(n,'title')+'</h4>';
         latestHTML += '<div class="ni-meta"><span class="source">'+(n.source||'')+'</span><span>'+fmtDate(n.published_at)+'</span></div>';
         latestHTML += '</div></article>';
       });
@@ -1528,15 +1534,15 @@ function renderHome(){
       catSectionsHTML += '<article class="cat-main" onclick="openNews('+main.id+')">';
       catSectionsHTML += '<div class="cat-img">'+cardImg(main, 'big')+'</div>';
       catSectionsHTML += '<div class="cat-body">';
-      catSectionsHTML += '<h4>'+(main.title_fa||main.title_en)+'</h4>';
-      catSectionsHTML += '<p>'+((main.summary_fa||main.summary_en||'').slice(0,150))+'...</p>';
+      catSectionsHTML += '<h4>'+pickLang(main,'title')+'</h4>';
+      catSectionsHTML += '<p>'+(pickLang(main,'summary').slice(0,150))+'...</p>';
       catSectionsHTML += '<div class="meta"><span class="source">'+(main.source||'')+'</span><span>'+fmtDate(main.published_at)+'</span></div>';
       catSectionsHTML += '</div></article>';
       small.forEach(n=>{
         catSectionsHTML += '<article class="cat-small" onclick="openNews('+n.id+')">';
         catSectionsHTML += '<div class="cat-img">'+cardImg(n, 'small')+'</div>';
         catSectionsHTML += '<div class="cat-body">';
-        catSectionsHTML += '<h4>'+(n.title_fa||n.title_en)+'</h4>';
+        catSectionsHTML += '<h4>'+pickLang(n,'title')+'</h4>';
         catSectionsHTML += '<div class="meta"><span class="source">'+(n.source||'')+'</span><span>'+fmtDate(n.published_at)+'</span></div>';
         catSectionsHTML += '</div></article>';
       });
