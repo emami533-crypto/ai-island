@@ -1099,11 +1099,11 @@
         <a onclick="navigate(event,'/about')" data-i18n="navAbout">درباره ما</a>
       </div>
       <div>
-        <h6 data-i18n="footTopics">موضوعات</h6>
-        <a onclick="navigate(event,'/news/llm')">مدل‌ها</a>
-        <a onclick="navigate(event,'/news/agent')">ایجنت‌ها</a>
-        <a onclick="navigate(event,'/news/hardware')">سخت‌افزار</a>
-        <a onclick="navigate(event,'/news/research')">پژوهش</a>
+          <h6 data-i18n="footTopics">موضوعات</h6>
+          <a onclick="navigate(event,'/news/llm')" data-i18n="footTopicModels">مدل‌ها</a>
+          <a onclick="navigate(event,'/news/agent')" data-i18n="footTopicAgents">ایجنت‌ها</a>
+          <a onclick="navigate(event,'/news/hardware')" data-i18n="footTopicHardware">سخت‌افزار</a>
+          <a onclick="navigate(event,'/news/research')" data-i18n="footTopicResearch">پژوهش</a>
       </div>
       <div>
         <h6 data-i18n="footContact">ارتباط</h6>
@@ -1270,7 +1270,11 @@ const I18N = {
     ab3t:"جامعه ما", ab3p:"جایی برای دیدن، نقد و الهام‌گرفتن از پروژه‌هایی که با هوش مصنوعی ساخته شده‌اند.",
     projTitle:"پروژه‌های ساخته‌شده با هوش مصنوعی", projSub:"ساخته‌های خودتون رو با جامعه به اشتراک بگذارید",
     learnTitle:"آموزش هوش مصنوعی", learnSub:"از صفر تا پیشرفته — همه‌چیز درباره AI",
-    newsTitle:"اخبار هوش مصنوعی", newsSub:"ترجمه‌شده از معتبرترین منابع جهان"
+    newsTitle:"اخبار هوش مصنوعی", newsSub:"ترجمه‌شده از معتبرترین منابع جهان",
+    footTopicModels:"مدل‌ها",
+    footTopicAgents:"ایجنت‌ها",
+    footTopicHardware:"سخت‌افزار",
+    footTopicResearch:"پژوهش",
   },
   en:{
     brand:"AI Island", brandSub:"AI ISLAND",
@@ -1314,7 +1318,11 @@ const I18N = {
     ab3t:"Our Community", ab3p:"A place to discover and get inspired.",
     projTitle:"AI Projects", projSub:"Share what you've built",
     learnTitle:"Learn AI", learnSub:"From beginner to advanced",
-    newsTitle:"AI News", newsSub:"Translated from trusted sources"
+    newsTitle:"AI News", newsSub:"Translated from trusted sources",
+    footTopicModels:"Models",
+    footTopicAgents:"Agents",
+    footTopicHardware:"Hardware",
+    footTopicResearch:"Research",
   }
 };
 
@@ -1601,7 +1609,7 @@ async function renderNewsPage(category, page){
             <div class="ni-img">${cardImg(n, 'small')}</div>
             <div class="ni-body">
               <div class="ni-cat">◈ ${catLabel(n.category)}</div>
-              <h4>${n.title_fa||n.title_en}</h4>
+              <h4>${pickLang(n,'title')}</h4>
               <div class="ni-meta">
                 <span class="source">${n.source||''}</span>
                 <span>${fmtDate(n.published_at)}</span>
@@ -1818,7 +1826,7 @@ async function openNews(id){
   try{
     const n = await api(`/api/news/${id}`);
     currentNewsItem = n;
-    const title = LANG==='fa' ? (n.title_fa||n.title_en) : (n.title_en||n.title_fa);
+    const title = LANG==='fa' ? pickLang(n,'title') : (n.title_en||n.title_fa);
     const content = LANG==='fa' ? (n.content_fa||n.summary_fa) : (n.content_en||n.summary_en);
     document.getElementById('mTitle').textContent = title;
     document.getElementById('mSrc').textContent = `${t('source')}: ${n.source||''} · ${fmtDate(n.published_at)} · ${catLabel(n.category)}`;
@@ -1991,7 +1999,7 @@ function doSearch(q){
         api(`/api/tutorials?limit=20`).catch(()=>({items:[]}))
       ]);
       const news = (newsData.items||[]).map(n=>({
-        type:'news', id:n.id, title: n.title_fa||n.title_en, cat: n.category, src: n.source, date: n.published_at
+        type:'news', id:n.id, title: pickLang(n,'title'), cat: n.category, src: n.source, date: n.published_at
       }));
       const tuts = (tutData.items||[]).filter(x=>{
         const tt = (x.title_fa||'') + ' ' + (x.title_en||'') + ' ' + (x.summary_fa||'');
