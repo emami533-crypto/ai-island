@@ -617,7 +617,6 @@ app.get('/api/image', async (req, res) => {
   const s = parseInt(seed) || 42;
   const p = prompt.slice(0, 200);
 
-  // هش برای نام فایل کش
   const hash = crypto.createHash('md5').update(`${p}|${s}|${w}|${h}`).digest('hex');
   const cacheFile = path.join(IMAGE_CACHE_DIR, `${hash}.jpg`);
 
@@ -628,44 +627,53 @@ app.get('/api/image', async (req, res) => {
     return fs.createReadStream(cacheFile).pipe(res);
   }
 
-  // وگرنه از Pollinations بگیر
   const apiKey = process.env.POLLINATIONS_KEY;
-  if(!apiKey){
-    console.warn('[img] POLLINATIONS_KEY تنظیم نشده');
-    return res.status(500).end();
-  }
 
-  const encodedPrompt = encodeURIComponent(p);
-  const url = `https://gen.pollinations.ai/image/${encodedPrompt}?width=${w}&height=${h}&seed=${s}&model=flux&key=${apiKey}`;
-
-  try{
-    const r = await fetch(url, { signal: AbortSignal.timeout(25000) });
-    if(!r.ok){
-      console.error(`[img] Pollinations HTTP ${r.status}`);
-      return res.status(r.status).end();
+  // لیست سرویس‌های تصویر (به ترتیب اولویت)
+  const imageServices = [
+    // ۱. Pollinations با کلید
+    async () => {
+      if(!apiKey || apiKey === 'none') throw new Error('no key');
+      const url = `https://gen.pollinations.ai/image/${encodeURIComponent(p)}?width=${w}&height=${h}&seed=${s}&model=flux&key=${apiKey}`;
+      const r = await fetch(url, { signal: AbortSignal.timeout(30000) });
+      if(!r.ok) throw new Error(`Pollinations ${r.status}`);
+      return Buffer.from(await r.arrayBuffer());
+    },
+    // ۲. Pollinations بدون کلید (ناشناس)
+    async () => {
+      const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(p)}?width=${w}&height=${h}&seed=${s}&nologo=true&model=flux`;
+      const r = await fetch(url, { signal: AbortSignal.timeout(35000) });
+      if(!r.ok) throw new Error(`Pollinations-anon ${r.status}`);
+      return Buffer.from(await r.arrayBuffer());
+    },
+    // ۳. Picsum به‌عنوان آخرین راه (عکس تصادفی مرتبط)
+    async () => {
+      const url = `https://picsum.photos/seed/${s}/${w}/${h}`;
+      const r = await fetch(url, { signal: AbortSignal.timeout(15000) });
+      if(!r.ok) throw new Error(`Picsum ${r.status}`);
+      return Buffer.from(await r.arrayBuffer());
     }
+  ];
 
-    const buf = Buffer.from(await r.arrayBuffer());
-    // ذخیره در کش
-    try{ fs.writeFileSync(cacheFile, buf); }catch(e){ console.error('[img] cache write error:', e.message); }
-
-    res.setHeader('Content-Type', r.headers.get('content-type') || 'image/jpeg');
-    res.setHeader('Cache-Control', 'public, max-age=604800');
-    res.send(buf);
-  }catch(e){
-    console.error('[img] fetch error:', e.message);
-    res.status(500).end();
+  // یکی‌یکی امتحان کن
+  for(const service of imageServices){
+    try{
+      const buf = await service();
+      if(buf && buf.length > 1000){
+        try{ fs.writeFileSync(cacheFile, buf); }catch(e){}
+        res.setHeader('Content-Type', 'image/jpeg');
+        res.setHeader('Cache-Control', 'public, max-age=604800');
+        return res.send(buf);
+      }
+    }catch(e){
+      console.log(`[img] ${e.message}`);
+    }
   }
-});
 
-app.get('/api/me', auth(true), (req,res)=>{
-  res.json({
-    user: req.user,
-    projects: db.prepare('SELECT * FROM projects WHERE user_id=? ORDER BY id DESC').all(req.user.id),
-    comments: db.prepare('SELECT * FROM comments WHERE user_id=? ORDER BY id DESC').all(req.user.id)
-  });
+  // اگه همه سرویس‌ها خطا دادن
+  console.log('[img] همه سرویس‌ها ناموفق');
+  res.status(500).end();
 });
-
 /* ═══════════ API اخبار با صفحه‌بندی ═══════════ */
 app.get('/api/news', (req,res)=>{
   const { category, q, page=1, limit=12 } = req.query;
