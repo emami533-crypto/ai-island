@@ -4,3 +4,4 @@ ai-island.db
 ai-island.db-shm
 ai-island.db-wal
 *.log
+public/images/cache/

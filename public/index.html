@@ -1432,14 +1432,20 @@ function cardImg(n, size){
   }
   const seed = Math.abs(hash) % 100000;
   
-  // URL پروکسی سرور (بدون کلید API)
+  // URL پروکسی سرور
   const prompt = encodeURIComponent(title + ', artificial intelligence, technology, digital art, no text');
-  const proxyUrl = `/api/image?prompt=${prompt}&seed=${seed}&width=800&height=400`;
+  const proxyUrl = `/api/image?prompt=${prompt}&seed=${seed}&width=600&height=300`;
   
-  return `<img src="${proxyUrl}" alt="" loading="lazy" 
-    onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('afterbegin','<div class=\\'cat-cover cat-${cat}\\'><div class=\\'cat-icon\\' style=\\'font-size:${sz}\\'>${icon}</div><div class=\\'cat-label\\'>${catLabel(cat)}</div></div>')"
-    style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
-  >`;
+  // fallback: اگه تصویر لود نشد، گرادیانت با آیکون
+  const fallbackHTML = `<div class="cat-cover cat-${cat}"><div class="cat-icon" style="font-size:${sz}">${icon}</div><div class="cat-label">${catLabel(cat)}</div></div>`;
+  
+  return `<div style="position:absolute;inset:0;overflow:hidden">
+    <img src="${proxyUrl}" alt="" loading="lazy" 
+      onload="this.dataset.loaded='1'"
+      onerror="if(!this.dataset.loaded){this.style.display='none'; this.parentElement.insertAdjacentHTML('afterbegin', '${fallbackHTML.replace(/'/g, "\\'")}')}"
+      style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0"
+    >
+  </div>`;
 }
 function renderHome(){
   const app = document.getElementById('app');
